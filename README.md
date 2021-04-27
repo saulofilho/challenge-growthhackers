@@ -1,4 +1,5 @@
-# Fitness Foods LC
+# :star: My Favorites App. :star:
+https://myfavoritesapp.vercel.app/
 
 ## The software
 
