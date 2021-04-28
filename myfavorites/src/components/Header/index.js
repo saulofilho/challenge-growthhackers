@@ -7,7 +7,7 @@ import './styles.css';
 
 const { Header } = Layout;
 
-const styleHeader = { background: '#bae7ff' };
+const styleHeader = { background: '#bae7ff', padding: '0 0' };
 
 export default function HeaderWrapper() {
   const dispatch = useDispatch();

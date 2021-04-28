@@ -1,18 +1,14 @@
 import { Layout } from 'antd';
+import './styles.css';
 
 const { Footer } = Layout;
 
-const styledFooter = { background: '#bae7ff' };
-const styleWrapper = {
-  maxWidth: '900px',
-  width: '100%',
-  margin: '0 auto',
-};
+const styledFooter = { background: '#bae7ff', padding: '20px 0' };
 
 export default function FooterWrapper() {
   return (
     <Footer style={styledFooter}>
-      <div style={styleWrapper}>
+      <div className="style-wrapper">
         <p>Footer</p>
       </div>
     </Footer>

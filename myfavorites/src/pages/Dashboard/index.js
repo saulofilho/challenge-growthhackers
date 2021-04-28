@@ -1,7 +1,7 @@
 import { Row, Col, Layout } from 'antd';
-
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import './styles.css';
 
 const { Content } = Layout;
 
@@ -9,12 +9,6 @@ const styleLayout = {
   background: '#e6fffb',
 };
 const styleContent = {};
-const styleWrapper = {
-  maxWidth: '900px',
-  width: '100%',
-  margin: '0 auto',
-  height: '100%',
-};
 
 // eslint-disable-next-line react/prop-types
 export default function Dashboard({ isPrivate, ...rest }) {
@@ -24,7 +18,7 @@ export default function Dashboard({ isPrivate, ...rest }) {
   return (
     <Layout style={styleLayout}>
       <Header />
-      <div style={styleWrapper}>
+      <div className="style-wrapper">
         <Content style={styleContent}>
           <Row>
             <Col span={24}>

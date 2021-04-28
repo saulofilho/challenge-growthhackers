@@ -31,9 +31,12 @@ ul {
   list-style: none;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 button {
   cursor: pointer;
-  font-family: 'Rubik', sans-serif;
 }
 
 ::-webkit-scrollbar {

@@ -11,7 +11,6 @@ export default function Routes() {
         <Route path="/" exact component={Dashboard} />
         <Route path="/login" exact component={SignIn} />
         <Route path="/favorites" exact component={Dashboard} isPrivate />
-        <Route path="/dashboard" exact component={Dashboard} isPrivate />
         <Route path="/" component={() => <h1>404</h1>} />
       </Switch>
     </BrowserRouter>
