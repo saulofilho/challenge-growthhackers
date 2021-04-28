@@ -1,7 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Layout } from 'antd';
 import { store } from '../../store';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+
+const { Content } = Layout;
+
+const styleLayout = {
+  background: 'white',
+};
 
 export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
@@ -14,9 +22,15 @@ export default function Favorites({ isPrivate }) {
   }
 
   return (
-    <>
-      <h1>favorites</h1>
-    </>
+    <Layout style={styleLayout}>
+      <Header />
+      <div className="style-wrapper">
+        <Content>
+          <h1>content favorites</h1>
+        </Content>
+      </div>
+      <Footer />
+    </Layout>
   );
 }
 

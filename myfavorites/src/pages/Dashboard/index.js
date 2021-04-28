@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 // import PropTypes from 'prop-types';
-import { Layout, Carousel } from 'antd';
+import { Layout, Carousel, Card, Row, Col } from 'antd';
 import { toast } from 'react-toastify';
 import { apiBeer, apiCartoon, apiSpace } from '../../services/api';
 import Header from '../../components/Header';
@@ -13,6 +13,8 @@ const { Content } = Layout;
 const styleLayout = {
   background: 'white',
 };
+
+const { Meta } = Card;
 
 export default function Dashboard() {
   // Data
@@ -118,38 +120,37 @@ export default function Dashboard() {
       </Carousel>
       <div className="style-wrapper">
         <Content>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignContent: 'center',
-              flexFlow: 'wrap',
-              border: '2px solid blue',
-            }}
-          >
+          <Row gutter={[16, 16]}>
             {DataPatterns.length ? (
               DataPatterns.sort(() => 0.5 - Math.random()).map((item) => (
-                <div
-                  key={item.id}
-                  style={{
-                    width: '200px',
-                    border: '2px solid red',
-                  }}
-                >
-                  <p>{item.name}</p>
-                  <p>{item.description}</p>
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{ width: '100px' }}
-                    loading="lazy"
-                  />
-                </div>
+                <Col xs={12} lg={6}>
+                  <Card
+                    key={item.id}
+                    hoverable
+                    cover={
+                      <img
+                        alt={item.name}
+                        src={item.image}
+                        loading="lazy"
+                        className="imgStyled"
+                      />
+                    }
+                  >
+                    <Meta
+                      title={item.name}
+                      description={
+                        item.description.length > 100
+                          ? `${item.description.substring(0, 100)}...`
+                          : item.description
+                      }
+                    />
+                  </Card>
+                </Col>
               ))
             ) : (
               <p>Loading...</p>
             )}
-          </div>
+          </Row>
         </Content>
       </div>
       <Footer />

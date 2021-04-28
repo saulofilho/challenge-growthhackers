@@ -4,3 +4,19 @@
   margin: 0 auto;
   padding: 0 20px;
 };
+.imgStyled {
+  object-fit: cover;
+}
+@media (min-width: 768px) {
+  .imgStyled {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+}
+@media (max-width: 768px) {
+  .imgStyled {
+    height: 200px;
+    object-fit: cover;
+  }
+}
