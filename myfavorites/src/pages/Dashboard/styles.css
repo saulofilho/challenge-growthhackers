@@ -1,11 +1,17 @@
-.style-wrapper {
+.style-wrapper-dashboard {
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 20px;
 };
 .imgStyled {
   object-fit: cover;
+}
+.btn-carousel {
+  background: #bae7ff;
+  border: unset;
+  height: 160px;
+  width: 100%;
 }
 @media (min-width: 768px) {
   .imgStyled {
