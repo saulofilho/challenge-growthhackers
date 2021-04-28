@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { Layout } from 'antd';
+// import PropTypes from 'prop-types';
+import { Layout, Carousel } from 'antd';
 import { toast } from 'react-toastify';
 import { apiBeer, apiCartoon, apiSpace } from '../../services/api';
 import Header from '../../components/Header';
@@ -14,10 +14,7 @@ const styleLayout = {
   background: 'white',
 };
 
-export default function Dashboard({ isPrivate, ...rest }) {
-  console.log('isPrivate', isPrivate);
-  console.log('rest', rest);
-
+export default function Dashboard() {
   // Data
   const [beerData, setBeerData] = useState([]);
   const [cartoonData, setCartoonData] = useState([]);
@@ -87,6 +84,7 @@ export default function Dashboard({ isPrivate, ...rest }) {
   const DataPatterns = concatDataPatterns.map((elm, index) => ({
     ...elm,
     id: index + 1,
+    favorite: false,
   }));
 
   // useEffect
@@ -96,9 +94,28 @@ export default function Dashboard({ isPrivate, ...rest }) {
     fetchSpaceData();
   }, [fetchBeerData, fetchCartoonData, fetchSpaceData]);
 
+  const contentStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#bae7ff',
+  };
+
   return (
     <Layout style={styleLayout}>
       <Header />
+      <Carousel autoplay>
+        <div>
+          <h3 style={contentStyle}>1</h3>
+        </div>
+        <div>
+          <h3 style={contentStyle}>2</h3>
+        </div>
+        <div>
+          <h3 style={contentStyle}>3</h3>
+        </div>
+      </Carousel>
       <div className="style-wrapper">
         <Content>
           <div
@@ -110,7 +127,7 @@ export default function Dashboard({ isPrivate, ...rest }) {
               border: '2px solid blue',
             }}
           >
-            {DataPatterns &&
+            {DataPatterns.length ? (
               DataPatterns.sort(() => 0.5 - Math.random()).map((item) => (
                 <div
                   key={item.id}
@@ -128,7 +145,10 @@ export default function Dashboard({ isPrivate, ...rest }) {
                     loading="lazy"
                   />
                 </div>
-              ))}
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </Content>
       </div>
@@ -136,14 +156,6 @@ export default function Dashboard({ isPrivate, ...rest }) {
     </Layout>
   );
 }
-
-Dashboard.propTypes = {
-  isPrivate: PropTypes.bool,
-};
-
-Dashboard.defaultProps = {
-  isPrivate: false,
-};
 
 /* <Content>
 {beerData.map((item) => (

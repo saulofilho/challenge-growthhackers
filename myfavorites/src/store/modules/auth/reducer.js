@@ -5,7 +5,6 @@ const INITIAL_STATE = {
   signed: false,
   loading: false,
   email: null,
-  admin: null,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -14,7 +13,6 @@ export default function auth(state = INITIAL_STATE, action) {
       case '@auth/SIGN_IN_REQUEST': {
         draft.loading = true;
         draft.email = action.payload.email;
-        draft.admin = action.payload.admin;
         break;
       }
       case '@auth/SIGN_IN_SUCCESS': {

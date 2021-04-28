@@ -1,15 +1,24 @@
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Layout, Row, Col } from 'antd';
 import { HeartTwoTone, UserOutlined } from '@ant-design/icons';
 import { signOut } from '../../store/modules/auth/actions';
 import './styles.css';
 
+import { store } from '../../store';
+
 const { Header } = Layout;
 
 const styleHeader = { background: '#bae7ff', padding: '0 0' };
 
-export default function HeaderWrapper() {
+export default function HeaderWrapper({ isPrivate, ...rest }) {
+  const { signed } = store.getState().auth;
+
+  console.log('isPrivate', isPrivate);
+  console.log('rest', rest);
+  console.log('signed', signed);
+
   const dispatch = useDispatch();
 
   function handleSignOut() {
@@ -27,9 +36,16 @@ export default function HeaderWrapper() {
             <Link to="/login">
               <UserOutlined />
             </Link>
-            <Link to="/favorites">
-              <HeartTwoTone />
-            </Link>
+            {signed ? (
+              <Link to="/favorites">
+                <HeartTwoTone />
+              </Link>
+            ) : (
+              <Link to="/favorites">
+                <HeartTwoTone />
+              </Link>
+            )}
+
             <button type="button" onClick={() => handleSignOut()}>
               Log out
             </button>
@@ -39,3 +55,11 @@ export default function HeaderWrapper() {
     </Header>
   );
 }
+
+HeaderWrapper.propTypes = {
+  isPrivate: PropTypes.bool,
+};
+
+HeaderWrapper.defaultProps = {
+  isPrivate: false,
+};
