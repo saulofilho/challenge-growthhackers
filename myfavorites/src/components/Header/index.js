@@ -1,8 +1,7 @@
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Row, Col } from 'antd';
 import { HeartTwoTone, UserOutlined } from '@ant-design/icons';
-import { signOut } from '../../store/modules/auth/actions';
+
 import './styles.css';
 
 const { Header } = Layout;
@@ -10,12 +9,6 @@ const { Header } = Layout;
 const styleHeader = { background: '#bae7ff', padding: '0 0' };
 
 export default function HeaderWrapper() {
-  const dispatch = useDispatch();
-
-  function handleSignOut() {
-    dispatch(signOut());
-  }
-
   return (
     <Header style={styleHeader}>
       <div className="style-wrapper">
@@ -32,9 +25,6 @@ export default function HeaderWrapper() {
             <Link to="/favorites">
               <HeartTwoTone />
             </Link>
-            <button type="button" onClick={() => handleSignOut()}>
-              Log out
-            </button>
           </Col>
         </Row>
       </div>

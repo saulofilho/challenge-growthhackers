@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
-import { signInRequest } from '../../store/modules/auth/actions';
+import { signInRequest, signOut } from '../../store/modules/auth/actions';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -15,6 +15,10 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
 
+  function handleSignOut() {
+    dispatch(signOut());
+  }
+
   function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));
   }
@@ -26,6 +30,9 @@ export default function SignIn() {
         <Input name="email" type="email" placeholder="your@email.com" />
         <Input name="password" type="password" placeholder="123456" />
         <button type="submit">{loading ? 'Loading...' : 'Get in'}</button>
+        <button type="button" onClick={() => handleSignOut()}>
+          Log out
+        </button>
       </Form>
     </>
   );
