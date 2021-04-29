@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Carousel, Card, Row, Col } from 'antd';
 import { toast } from 'react-toastify';
 import { apiBeer, apiCartoon, apiSpace } from '../../services/api';
@@ -18,7 +20,7 @@ const { Meta } = Card;
 
 export default function Dashboard() {
   // Data
-  const [allData, setAllData] = useState([]);
+  // const [allData, setAllData] = useState([]);
   const [beerData, setBeerData] = useState([]);
   const [cartoonData, setCartoonData] = useState([]);
   const [spaceData, setSpaceData] = useState([]);
@@ -78,120 +80,144 @@ export default function Dashboard() {
     category: 'space',
   }));
 
-  // Concat
+  // Concat Data Patterns
   const concatDataPatterns = beerDataPattern.concat(
     cartoonDataPattern,
     spaceDataPattern
   );
 
-  // Array Data Patterns
+  // Setting Data Patterns
   const dataPatterns = concatDataPatterns.map((elm, index) => ({
     ...elm,
     id: index + 1,
     favorite: false,
   }));
 
-  // useEffect
+  // Fetch useEffect
   useEffect(() => {
     fetchBeerData();
     fetchCartoonData();
     fetchSpaceData();
   }, [fetchBeerData, fetchCartoonData, fetchSpaceData]);
 
-  useEffect(() => {
-    if (!allData.length) {
-      setAllData([...dataPatterns]);
-    }
-  }, [allData.length, dataPatterns]);
-
-  // Local Storage
-  localStorage.setItem('storedData', JSON.stringify([...dataPatterns]));
+  // Favorites
   const storedData = JSON.parse(localStorage.getItem('storedData') || '{}');
-
-  // Filter Data
-  const beerFiltered = dataPatterns.filter((elm) => elm.category === 'beer');
-  const cartoonFiltered = dataPatterns.filter(
-    (elm) => elm.category === 'cartoon'
+  const storedFavorites = JSON.parse(
+    localStorage.getItem('storedFavorites') || '{}'
   );
-  const spaceFiltered = dataPatterns.filter((elm) => elm.category === 'space');
 
-  // Set Filtered Data
-  const setBeerFiltered = () => {
-    setAllData(beerFiltered);
-  };
-  const setCartoonFiltered = () => {
-    setAllData(cartoonFiltered);
-  };
-  const setSpaceFiltered = () => {
-    setAllData(spaceFiltered);
+  const [localData, setLocalData] = useState([storedData || []]);
+  const [localFavorites, setLocalFavorites] = useState([storedFavorites || []]);
+
+  const updateFavorite = (item) => {
+    setLocalData((prevState) => [...prevState, item]);
+    setLocalFavorites((prevState) => [
+      ...prevState,
+      { ...item, favorite: true },
+    ]);
+
+    const favoritedData = storedFavorites.map((elm) => {
+      if (elm.id === item.id) {
+        return {
+          ...elm,
+          favorite: !false,
+        };
+      }
+      return elm;
+    });
+
+    setLocalData(favoritedData);
+
+    console.log('item---------->>>', item);
+    console.log('favoritedData---------->>>', favoritedData);
   };
 
-  console.log('xxx', allData);
-  console.log('storedData', storedData);
+  useEffect(() => {
+    localStorage.setItem('storedData', JSON.stringify(dataPatterns));
+    localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
+  }, [dataPatterns, localFavorites]);
+
+  // useEffect(() => {
+  //   const data = localStorage.getItem('data') || '{}';
+  //   JSON.parse(data);
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('data', JSON.stringify(dataPatterns));
+  // });
+
+  // const updateFavorite = useCallback(
+  //   (id) => {
+  //     const upData = localData.map((elm) => (elm.id === id ? favorite : elm));
+
+  //     setFavorite(!favorite);
+  //     setLocalData(upData);
+  //     localStorage.setItem('storedDataTag', JSON.stringify(upData));
+  //   },
+  //   [localData, favorite]
+  // );
+
+  console.log('storedFavorites', storedFavorites);
+  console.log('localData', localData);
+  console.log('storedFavorites', storedFavorites);
 
   return (
     <Layout style={styleLayout}>
       <Header />
       <Carousel autoplay>
-        <div>
-          <button
-            className="btn-carousel"
-            type="button"
-            onClick={() => setBeerFiltered()}
-          >
-            Beer&apos;s category
-          </button>
+        <div className="carousel-item">
+          <Link to="/beer">Beer&apos;s category</Link>
         </div>
-        <div>
-          <button
-            className="btn-carousel"
-            type="button"
-            onClick={() => setCartoonFiltered()}
-          >
-            Cartoon&apos;s category
-          </button>
+        <div className="carousel-item">
+          <Link to="/cartoon">Cartoon&apos;s category</Link>
         </div>
-        <div>
-          <button
-            className="btn-carousel"
-            type="button"
-            onClick={() => setSpaceFiltered()}
-          >
-            Space&apos;s category
-          </button>
+        <div className="carousel-item">
+          <Link to="/space">Space&apos;s category</Link>
         </div>
       </Carousel>
       <div className="style-wrapper-dashboard">
         <Content>
           <Row gutter={[16, 16]}>
-            {allData.length ? (
-              allData
-                .sort(() => 0.5 - Math.random())
-                .map((item) => (
-                  <Col xs={12} lg={6} key={item.id}>
-                    <Card
-                      hoverable
-                      cover={
-                        <img
-                          alt={item.name}
-                          src={item.image}
-                          loading="lazy"
-                          className="imgStyled"
-                        />
-                      }
-                    >
-                      <p>{item.category}</p>
-                      <Meta
-                        title={item.name}
-                        description={
-                          item.description.length > 100
-                            ? `${item.description.substring(0, 100)}...`
-                            : item.description
-                        }
+            {storedData.length ? (
+              storedData.map((item) => (
+                <Col xs={12} lg={6} key={item.id}>
+                  <Card
+                    hoverable
+                    cover={
+                      <img
+                        alt={item.name}
+                        src={item.image}
+                        loading="lazy"
+                        className="imgStyled"
                       />
-                    </Card>
-                  </Col>
-                ))
+                    }
+                  >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        updateFavorite(item);
+                      }}
+                    >
+                      {item.favorite === false ? (
+                        <HeartOutlined />
+                      ) : (
+                        <HeartFilled />
+                      )}
+                    </button>
+
+                    <p>{item.category}</p>
+                    <Meta
+                      title={item.name}
+                      description={
+                        item.description.length > 100
+                          ? `${item.description.substring(0, 100)}...`
+                          : item.description
+                      }
+                    />
+                  </Card>
+                </Col>
+              ))
             ) : (
               <p>Loading...</p>
             )}
@@ -203,47 +229,35 @@ export default function Dashboard() {
   );
 }
 
-/* <Content>
-{beerData.map((item) => (
-  <div key={item.id}>
-    <p>{item.name}</p>
-    <img src={item.image_url} alt={item.name} />
-  </div>
-))}
-<br />
-{cartoonData.map((item) => (
-  <div key={item.id}>
-    <p>{item.name}</p>
-    <img src={item.image} alt={item.name} />
-  </div>
-))}
-<br />
-{spaceData.map((item) => (
-  <div key={item.id}>
-    <p>{item.name}</p>
-    <img src={item.flickr_images} alt={item.name} />
-  </div>
-))}
-</Content> */
+// useEffect(() => {
+//   if (!allData.length) {
+//     setAllData([...dataPatterns]);
+//   }
+// }, [allData.length, dataPatterns]);
 
-/* <Layout style={styleLayout}>
-  <Header />
-  <div className="style-wrapper">
-    <Content>
-      <Row>
-        <Col span={24}>
-          <h1>Dashboard x</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={6}>
-          <h1>Dashboard</h1>
-        </Col>
-        <Col span={6}>
-          <h1>Dashboard</h1>
-        </Col>
-      </Row>
-    </Content>
-  </div>
-  <Footer />
-</Layout>; */
+// Local Storage
+// localStorage.setItem('storedData', JSON.stringify([...dataPatterns]));
+// const storedData = JSON.parse(localStorage.getItem('storedData') || '{}');
+
+// Filter Data
+// const beerFiltered = dataPatterns.filter((elm) => elm.category === 'beer');
+// const cartoonFiltered = dataPatterns.filter(
+//   (elm) => elm.category === 'cartoon'
+// );
+// const spaceFiltered = dataPatterns.filter((elm) => elm.category === 'space');
+
+// // Set Filtered Data
+// const setBeerFiltered = () => {
+//   setAllData(beerFiltered);
+// };
+// const setCartoonFiltered = () => {
+//   setAllData(cartoonFiltered);
+// };
+// const setSpaceFiltered = () => {
+//   setAllData(spaceFiltered);
+// };
+
+// console.log('xxx', allData);
+// console.log('storedData', storedData);
+
+// .sort(() => 0.5 - Math.random())
