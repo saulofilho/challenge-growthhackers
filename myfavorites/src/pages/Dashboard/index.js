@@ -16,6 +16,13 @@ const { Content } = Layout;
 const styleLayout = {
   background: 'white',
 };
+const styleWrapper = {
+  maxWidth: '900px',
+  width: '100%',
+  margin: '0 auto',
+  height: '100%',
+  padding: '0 20px',
+};
 
 const { Meta } = Card;
 
@@ -153,7 +160,7 @@ export default function Dashboard() {
           <Link to="/space">Space&apos;s category</Link>
         </div>
       </Carousel>
-      <div className="style-wrapper-dashboard">
+      <div style={styleWrapper}>
         <Content>
           <Row gutter={[16, 16]}>
             {localData && localData.length
