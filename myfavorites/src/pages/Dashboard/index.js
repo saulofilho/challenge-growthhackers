@@ -16,11 +16,15 @@ const styleLayout = {
   background: 'white',
 };
 
+const styleBtn = {
+  border: 'unset',
+  background: 'transparent',
+};
+
 const { Meta } = Card;
 
 export default function Dashboard() {
   // Data
-  // const [allData, setAllData] = useState([]);
   const [beerData, setBeerData] = useState([]);
   const [cartoonData, setCartoonData] = useState([]);
   const [spaceData, setSpaceData] = useState([]);
@@ -105,9 +109,11 @@ export default function Dashboard() {
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
   );
-  const xaxa = JSON.parse(localStorage.getItem('xaxa') || '[]');
+  const dataPersisted = JSON.parse(
+    localStorage.getItem('dataPersisted') || '[]'
+  );
 
-  const [localData, setLocalData] = useState(...xaxa, xaxa);
+  const [localData, setLocalData] = useState(dataPersisted);
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
   const [editOn, setEditOn] = useState(false);
 
@@ -129,18 +135,13 @@ export default function Dashboard() {
 
     setLocalData(favoritedData);
     localStorage.setItem('storedData', JSON.stringify(favoritedData));
-    localStorage.setItem('xaxa', JSON.stringify(favoritedData));
+    localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
   };
 
   useEffect(() => {
     localStorage.setItem('storedData', JSON.stringify(dataPatterns));
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [dataPatterns, localFavorites]);
-
-  console.log('storedFavorites', storedFavorites);
-  console.log('localData', localData);
-  console.log('storedData', storedData);
-  console.log('xaxa', xaxa);
 
   return (
     <Layout style={styleLayout}>
@@ -159,8 +160,8 @@ export default function Dashboard() {
       <div className="style-wrapper-dashboard">
         <Content>
           <Row gutter={[16, 16]}>
-            {xaxa && xaxa.length
-              ? xaxa.map((item) => (
+            {localData && localData.length
+              ? localData.map((item) => (
                   <Col xs={12} lg={6} key={item.id}>
                     <Card
                       hoverable
@@ -169,11 +170,12 @@ export default function Dashboard() {
                           alt={item.name}
                           src={item.image}
                           loading="lazy"
-                          className="imgStyled"
+                          className="img-styled"
                         />
                       }
                     >
                       <button
+                        style={styleBtn}
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -205,11 +207,13 @@ export default function Dashboard() {
                           alt={item.name}
                           src={item.image}
                           loading="lazy"
-                          className="imgStyled"
+                          className="img-styled"
                         />
                       }
                     >
                       <button
+                        loading="lazy"
+                        className="btn-favorited"
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -219,7 +223,6 @@ export default function Dashboard() {
                       >
                         {item.favorite ? <HeartFilled /> : <HeartOutlined />}
                       </button>
-
                       <p>{item.category}</p>
                       <Meta
                         title={item.name}
