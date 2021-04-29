@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Layout, Card, Row, Col, Input } from 'antd';
+import { Layout, Card, Row, Col, Input, Pagination } from 'antd';
 import { toast } from 'react-toastify';
 import { apiBeer } from '../../services/api';
 import Header from '../../components/Header';
@@ -32,6 +32,7 @@ const { Meta } = Card;
 export default function Beer() {
   const [beerData, setBeerData] = useState([]);
   const [editOn, setEditOn] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const fetchBeerData = useCallback(async () => {
     await apiBeer
@@ -70,6 +71,23 @@ export default function Beer() {
   //   localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
   // };
 
+  const handleSearchTagChanges = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const searchResults = useMemo(
+    () =>
+      !searchValue
+        ? beerData
+        : beerData.filter((item) =>
+            item.name
+              .toString()
+              .toLowerCase()
+              .includes(searchValue.toLowerCase())
+          ),
+    [beerData, searchValue]
+  );
+
   return (
     <Layout style={styleLayout}>
       <Header />
@@ -77,13 +95,13 @@ export default function Beer() {
         <Search
           style={styleInput}
           placeholder="input search text"
-          onSearch={console.log()}
+          onChange={handleSearchTagChanges}
           enterButton
         />
         <Content>
           <Row gutter={[16, 16]}>
-            {beerData && beerData.length ? (
-              beerData.map((item) => (
+            {searchResults && searchResults.length ? (
+              searchResults.map((item) => (
                 <Col xs={12} lg={6} key={item.id}>
                   <Card
                     hoverable
@@ -125,8 +143,12 @@ export default function Beer() {
             )}
           </Row>
         </Content>
+        <Pagination defaultCurrent={1} total={beerData.length} />
       </div>
       <Footer />
     </Layout>
   );
 }
+
+// https://codesandbox.io/s/9235px9x3w?file=/src/index.tsx:462-468
+// https://codesandbox.io/s/react-hook-pagination-g7wje
