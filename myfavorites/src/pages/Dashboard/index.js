@@ -100,36 +100,36 @@ export default function Dashboard() {
     fetchSpaceData();
   }, [fetchBeerData, fetchCartoonData, fetchSpaceData]);
 
-  // Favorites
-  const storedData = JSON.parse(localStorage.getItem('storedData') || '{}');
+  // Local Storage
+  const storedData = JSON.parse(localStorage.getItem('storedData') || '[]');
   const storedFavorites = JSON.parse(
-    localStorage.getItem('storedFavorites') || '{}'
+    localStorage.getItem('storedFavorites') || '[]'
   );
+  const xaxa = JSON.parse(localStorage.getItem('xaxa') || '[]');
 
-  const [localData, setLocalData] = useState([storedData || []]);
-  const [localFavorites, setLocalFavorites] = useState([storedFavorites || []]);
+  const [localData, setLocalData] = useState(...xaxa, xaxa);
+  const [localFavorites, setLocalFavorites] = useState(storedFavorites);
+  const [editOn, setEditOn] = useState(false);
 
   const updateFavorite = (item) => {
-    setLocalData((prevState) => [...prevState, item]);
     setLocalFavorites((prevState) => [
       ...prevState,
-      { ...item, favorite: true },
+      { ...item, favorite: editOn },
     ]);
 
-    const favoritedData = storedFavorites.map((elm) => {
+    const favoritedData = storedData.map((elm) => {
       if (elm.id === item.id) {
         return {
           ...elm,
-          favorite: !false,
+          favorite: editOn,
         };
       }
       return elm;
     });
 
     setLocalData(favoritedData);
-
-    console.log('item---------->>>', item);
-    console.log('favoritedData---------->>>', favoritedData);
+    localStorage.setItem('storedData', JSON.stringify(favoritedData));
+    localStorage.setItem('xaxa', JSON.stringify(favoritedData));
   };
 
   useEffect(() => {
@@ -137,29 +137,10 @@ export default function Dashboard() {
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [dataPatterns, localFavorites]);
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem('data') || '{}';
-  //   JSON.parse(data);
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('data', JSON.stringify(dataPatterns));
-  // });
-
-  // const updateFavorite = useCallback(
-  //   (id) => {
-  //     const upData = localData.map((elm) => (elm.id === id ? favorite : elm));
-
-  //     setFavorite(!favorite);
-  //     setLocalData(upData);
-  //     localStorage.setItem('storedDataTag', JSON.stringify(upData));
-  //   },
-  //   [localData, favorite]
-  // );
-
   console.log('storedFavorites', storedFavorites);
   console.log('localData', localData);
-  console.log('storedFavorites', storedFavorites);
+  console.log('storedData', storedData);
+  console.log('xaxa', xaxa);
 
   return (
     <Layout style={styleLayout}>
@@ -178,49 +159,79 @@ export default function Dashboard() {
       <div className="style-wrapper-dashboard">
         <Content>
           <Row gutter={[16, 16]}>
-            {storedData.length ? (
-              storedData.map((item) => (
-                <Col xs={12} lg={6} key={item.id}>
-                  <Card
-                    hoverable
-                    cover={
-                      <img
-                        alt={item.name}
-                        src={item.image}
-                        loading="lazy"
-                        className="imgStyled"
-                      />
-                    }
-                  >
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        updateFavorite(item);
-                      }}
-                    >
-                      {item.favorite === false ? (
-                        <HeartOutlined />
-                      ) : (
-                        <HeartFilled />
-                      )}
-                    </button>
-
-                    <p>{item.category}</p>
-                    <Meta
-                      title={item.name}
-                      description={
-                        item.description.length > 100
-                          ? `${item.description.substring(0, 100)}...`
-                          : item.description
+            {xaxa && xaxa.length
+              ? xaxa.map((item) => (
+                  <Col xs={12} lg={6} key={item.id}>
+                    <Card
+                      hoverable
+                      cover={
+                        <img
+                          alt={item.name}
+                          src={item.image}
+                          loading="lazy"
+                          className="imgStyled"
+                        />
                       }
-                    />
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
+                    >
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setEditOn(!editOn);
+                          updateFavorite(item);
+                        }}
+                      >
+                        {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+                      </button>
+
+                      <p>{item.category}</p>
+                      <Meta
+                        title={item.name}
+                        description={
+                          item.description && item.description.length > 100
+                            ? `${item.description.substring(0, 100)}...`
+                            : item.description
+                        }
+                      />
+                    </Card>
+                  </Col>
+                ))
+              : dataPatterns.map((item) => (
+                  <Col xs={12} lg={6} key={item.id}>
+                    <Card
+                      hoverable
+                      cover={
+                        <img
+                          alt={item.name}
+                          src={item.image}
+                          loading="lazy"
+                          className="imgStyled"
+                        />
+                      }
+                    >
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setEditOn(!editOn);
+                          updateFavorite(item);
+                        }}
+                      >
+                        {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+                      </button>
+
+                      <p>{item.category}</p>
+                      <Meta
+                        title={item.name}
+                        description={
+                          item.description && item.description.length > 100
+                            ? `${item.description.substring(0, 100)}...`
+                            : item.description
+                        }
+                      />
+                    </Card>
+                  </Col>
+                ))}
           </Row>
         </Content>
       </div>
