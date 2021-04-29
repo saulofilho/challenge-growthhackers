@@ -19,7 +19,7 @@ export default function HeaderWrapper() {
             </Link>
           </Col>
           <Col xs={12} lg={4}>
-            <Link to="/login">
+            <Link to="/admin">
               <UserOutlined />
             </Link>
             <Link to="/favorites">

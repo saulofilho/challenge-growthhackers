@@ -14,9 +14,6 @@ const styleLayout = {
 export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
 
-  console.log('isPrivate', isPrivate);
-  console.log('signed', signed);
-
   if (window.location.pathname === '/favorites' && isPrivate && !signed) {
     window.location.replace('/');
   }

@@ -13,7 +13,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Dashboard} />
-        <Route path="/login" exact component={SignIn} />
+        <Route path="/admin" exact component={SignIn} />
         <Route path="/beer" exact component={Beer} />
         <Route path="/cartoon" exact component={Cartoon} />
         <Route path="/space" exact component={Space} />
