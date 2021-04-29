@@ -21,7 +21,7 @@ const styleWrapper = {
   width: '100%',
   margin: '0 auto',
   height: '100%',
-  padding: '0 20px',
+  padding: '20px',
 };
 
 const { Meta } = Card;
