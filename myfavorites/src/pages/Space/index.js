@@ -41,7 +41,7 @@ export default function Space() {
       .then((response) => {
         const { data } = response;
 
-        setBeerData([...data]);
+        setBeerData([...data.docs]);
       })
       .catch((err) => {
         toast.error(err.message);
@@ -110,7 +110,7 @@ export default function Space() {
                     cover={
                       <img
                         alt={item.name}
-                        src={item.image_url}
+                        src={item.flickr_images}
                         loading="lazy"
                         className="img-styled"
                       />
@@ -127,16 +127,10 @@ export default function Space() {
                     >
                       {item.favorite ? <HeartFilled /> : <HeartOutlined />}
                     </button>
-
-                    <p>{item.category}</p>
-                    <Meta
-                      title={item.name}
-                      description={
-                        item.description && item.description.length > 100
-                          ? `${item.description.substring(0, 100)}...`
-                          : item.description
-                      }
-                    />
+                    <Meta description={item.company} />
+                    <Meta title={item.name} description={item.country} />
+                    <Meta description={item.description} />
+                    <Meta description={item.type} />
                   </Card>
                 </Col>
               ))
