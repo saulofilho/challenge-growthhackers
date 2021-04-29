@@ -7,6 +7,14 @@ import './styles.css';
 const { Header } = Layout;
 
 const styleHeader = { background: '#bae7ff', padding: '0 0' };
+const styleColMenu = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'flex-end',
+};
+const styleMenuLink = {
+  paddingRight: '20px',
+};
 
 export default function HeaderWrapper() {
   return (
@@ -18,8 +26,8 @@ export default function HeaderWrapper() {
               <p>⭐My Favorites⭐</p>
             </Link>
           </Col>
-          <Col xs={12} lg={4}>
-            <Link to="/admin">
+          <Col xs={12} lg={4} style={styleColMenu}>
+            <Link to="/admin" style={styleMenuLink}>
               <UserOutlined />
             </Link>
             <Link to="/favorites">
