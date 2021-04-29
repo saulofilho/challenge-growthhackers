@@ -9,7 +9,7 @@ export default function FooterWrapper() {
   return (
     <Footer style={styledFooter}>
       <div className="style-wrapper">
-        <p>Footer</p>
+        <p>Copyright © 2021 My Favorites, Inc. All rights reserved.</p>
       </div>
     </Footer>
   );

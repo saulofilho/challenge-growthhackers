@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 // import PropTypes from 'prop-types';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Carousel, Card, Row, Col } from 'antd';
@@ -14,11 +15,6 @@ const { Content } = Layout;
 
 const styleLayout = {
   background: 'white',
-};
-
-const styleBtn = {
-  border: 'unset',
-  background: 'transparent',
 };
 
 const { Meta } = Card;
@@ -91,9 +87,9 @@ export default function Dashboard() {
   );
 
   // Setting Data Patterns
-  const dataPatterns = concatDataPatterns.map((elm, index) => ({
+  const dataPatterns = concatDataPatterns.map((elm) => ({
     ...elm,
-    id: index + 1,
+    id: uuidv4(),
     favorite: false,
   }));
 
@@ -175,7 +171,7 @@ export default function Dashboard() {
                       }
                     >
                       <button
-                        style={styleBtn}
+                        className="btn-favorited"
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -185,7 +181,6 @@ export default function Dashboard() {
                       >
                         {item.favorite ? <HeartFilled /> : <HeartOutlined />}
                       </button>
-
                       <p>{item.category}</p>
                       <Meta
                         title={item.name}
@@ -212,7 +207,6 @@ export default function Dashboard() {
                       }
                     >
                       <button
-                        loading="lazy"
                         className="btn-favorited"
                         type="button"
                         onClick={(e) => {
@@ -275,3 +269,5 @@ export default function Dashboard() {
 // console.log('storedData', storedData);
 
 // .sort(() => 0.5 - Math.random())
+
+// https://react-select.com/home

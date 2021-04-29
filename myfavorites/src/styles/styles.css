@@ -44,10 +44,10 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #a7ff83;
+  background-color: rgb(255, 255, 119);
 }
 
 ::selection {
-  background: #071a52;
+  background: rgb(255, 255, 119);
   color: #17b978;
 }
