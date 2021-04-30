@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-// import PropTypes from 'prop-types';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Carousel, Card, Row, Col } from 'antd';
 import { toast } from 'react-toastify';
@@ -69,12 +67,12 @@ export default function Dashboard() {
   }, []);
 
   // Concat Data
-  const concatDataPatterns = beerData.concat(cartoonData, spaceData);
+  const concatData = beerData.concat(cartoonData, spaceData);
 
   // Setting Data
-  const dataPatterns = concatDataPatterns.map((elm) => ({
+  const dataPatterns = concatData.map((elm, index) => ({
     ...elm,
-    id: uuidv4(),
+    id: index + 1,
   }));
 
   // Fetch useEffect
@@ -85,7 +83,7 @@ export default function Dashboard() {
   }, [fetchBeerData, fetchCartoonData, fetchSpaceData]);
 
   // Local Storage
-  const storedData = JSON.parse(localStorage.getItem('storedData') || '[]');
+
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
   );
@@ -94,19 +92,9 @@ export default function Dashboard() {
   const [editOn, setEditOn] = useState(false);
 
   const updateFavorite = (item) => {
-    setLocalFavorites((prevState) => [...prevState, { ...item }]);
-
-    const favoritedData = storedData.map((elm) => {
-      if (elm.id === item.id) {
-        return {
-          ...elm,
-          favorite: editOn,
-        };
-      }
-      return elm;
-    });
-
-    localStorage.setItem('storedData', JSON.stringify(favoritedData));
+    if (!localFavorites.find((el) => el.id === item.id)) {
+      setLocalFavorites((prevState) => [...prevState, { ...item }]);
+    }
   };
 
   useEffect(() => {

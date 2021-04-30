@@ -54,13 +54,14 @@ export default function Favorites({ isPrivate }) {
 
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
-  const updateFavorite = (item) => {
+  const deleteFavorite = (item) => {
     const i = localFavorites.findIndex((el) => el.id === item.id);
     if (i !== -1) {
       localFavorites.splice(i, 1);
     }
 
     localFavorites.splice(i, 1);
+
     setLocalFavorites(
       localFavorites.map((elm) => {
         if (elm.id === item.id) {
@@ -168,7 +169,7 @@ export default function Favorites({ isPrivate }) {
                   onClick={(e) => {
                     e.preventDefault();
                     setEditOn(!editOn);
-                    updateFavorite(item);
+                    deleteFavorite(item);
                   }}
                 >
                   Delete
