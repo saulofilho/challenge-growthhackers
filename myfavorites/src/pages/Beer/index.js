@@ -46,11 +46,6 @@ export default function Beer() {
   const [sortType, setSortType] = useState('name');
   const [orderProducts, setOrderProducts] = useState(false);
 
-  const addFavorited = beerData.map((elm) => ({
-    ...elm,
-    favorite: false,
-  }));
-
   const fetchBeerData = useCallback(async () => {
     await apiBeer
       .then((response) => {
@@ -84,8 +79,6 @@ export default function Beer() {
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [localFavorites]);
 
-  console.log('localFavorites', localFavorites);
-
   const handleSearchTagChanges = (e) => {
     setSearchValue(e.target.value);
   };
@@ -93,14 +86,14 @@ export default function Beer() {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? addFavorited
-        : addFavorited.filter((item) =>
+        ? beerData
+        : beerData.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [addFavorited, searchValue]
+    [beerData, searchValue]
   );
 
   useEffect(() => {
@@ -178,7 +171,11 @@ export default function Beer() {
                         updateFavorite(item);
                       }}
                     >
-                      {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+                      {storedFavorites.map((elm) => elm.name === item.id) ? (
+                        <HeartFilled />
+                      ) : (
+                        <HeartOutlined />
+                      )}
                     </button>
                     <Meta description={item.first_brewed} />
                     <Meta description={item.tagline} />

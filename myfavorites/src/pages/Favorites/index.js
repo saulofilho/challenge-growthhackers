@@ -44,13 +44,17 @@ export default function Favorites({ isPrivate }) {
     localStorage.getItem('storedFavorites') || '[]'
   );
 
-  const filteredFavorites = storedFavorites.filter(
-    (elm) => elm.favorite === true
-  );
-
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
+  console.log('setLocalFavorites', setLocalFavorites);
+
   const updateFavorite = (item) => {
+    const i = storedFavorites.findIndex((el) => el.id === item.id);
+    if (i !== -1) {
+      storedFavorites.splice(i, 1);
+    }
+
+    storedFavorites.splice(i, 1);
     setLocalFavorites(
       localFavorites.map((elm) => {
         if (elm.id === item.id) {
@@ -62,7 +66,6 @@ export default function Favorites({ isPrivate }) {
         return elm;
       })
     );
-
     window.location.reload();
   };
 
@@ -73,14 +76,14 @@ export default function Favorites({ isPrivate }) {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? filteredFavorites
-        : filteredFavorites.filter((item) =>
+        ? localFavorites
+        : localFavorites.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [filteredFavorites, searchValue]
+    [localFavorites, searchValue]
   );
 
   useEffect(() => {
