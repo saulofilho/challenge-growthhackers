@@ -27,23 +27,6 @@ export function* signIn({ payload }) {
   }
 }
 
-export function* signUp({ payload }) {
-  try {
-    const { name, email, password } = payload;
-
-    yield call(api.post, 'users', {
-      name,
-      email,
-      password,
-    });
-
-    window.location.replace('/');
-  } catch (err) {
-    toast.error('Falha no cadastro. Verifique os seus dados.');
-    yield put(signFailure());
-  }
-}
-
 export function setToken({ payload }) {
   if (!payload) return;
 
@@ -61,6 +44,5 @@ export function signOut() {
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
 ]);
