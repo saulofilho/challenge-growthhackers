@@ -103,7 +103,6 @@ export default function Dashboard() {
     });
 
     localStorage.setItem('storedData', JSON.stringify(favoritedData));
-    localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
   };
 
   useEffect(() => {

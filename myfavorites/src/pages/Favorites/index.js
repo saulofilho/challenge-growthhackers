@@ -27,6 +27,14 @@ const styleWrapper = {
 const styleInput = {
   padding: '20px 0',
 };
+const styleWrapperFilter = {
+  padding: '0 0 20px',
+};
+const styleBtnFilter = {
+  border: 'unset',
+  background: 'transparent',
+  paddingLeft: '20px',
+};
 
 export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
@@ -37,10 +45,14 @@ export default function Favorites({ isPrivate }) {
 
   const [editOn, setEditOn] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [sortType, setSortType] = useState('name');
+  const [orderProducts, setOrderProducts] = useState(false);
 
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
   );
+
+  const [data, setData] = useState(storedFavorites);
 
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
@@ -72,19 +84,41 @@ export default function Favorites({ isPrivate }) {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? localFavorites
-        : localFavorites.filter((item) =>
+        ? data
+        : data.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [localFavorites, searchValue]
+    [data, searchValue]
   );
 
   useEffect(() => {
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [localFavorites]);
+
+  useEffect(() => {
+    const sortArray = (type) => {
+      const types = {
+        name: 'name',
+        description: 'description',
+      };
+      const sortProperty = types[type];
+      const sorted = [...data].sort((a, b) =>
+        b[sortProperty].localeCompare(a[sortProperty])
+      );
+      setData(sorted);
+    };
+
+    sortArray(sortType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortType]);
+
+  const reorderProducts = () => {
+    data.reverse();
+    setOrderProducts(!orderProducts);
+  };
 
   return (
     <Layout style={styleLayout}>
@@ -96,6 +130,19 @@ export default function Favorites({ isPrivate }) {
           onChange={handleSearchTagChanges}
           enterButton
         />
+        <div style={styleWrapperFilter}>
+          <select onChange={(e) => setSortType(e.target.value)}>
+            <option value="name">Name</option>
+            <option value="description">Description</option>
+          </select>
+          <button
+            type="button"
+            onClick={() => reorderProducts()}
+            style={styleBtnFilter}
+          >
+            {orderProducts ? <i>↑</i> : <i>↓</i>}
+          </button>
+        </div>
         <Content>
           <List
             itemLayout="horizontal"
