@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Card, Row, Col, Input, Pagination } from 'antd';
 import { toast } from 'react-toastify';
-import { apiBeer } from '../../services/api';
+import DataService from '../../services/fetchPagination';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -36,6 +36,12 @@ const styleBtnFilter = {
   background: 'transparent',
   paddingLeft: '20px',
 };
+const stylePagination = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 0 0',
+};
 
 const { Meta } = Card;
 
@@ -45,9 +51,10 @@ export default function Beer() {
   const [searchValue, setSearchValue] = useState('');
   const [sortType, setSortType] = useState('name');
   const [orderProducts, setOrderProducts] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchBeerData = useCallback(async () => {
-    await apiBeer
+  const fetchBeerData = useCallback(async (pageNumber) => {
+    await DataService.fetchBeer(pageNumber)
       .then((response) => {
         const { data } = response;
 
@@ -59,8 +66,12 @@ export default function Beer() {
   }, []);
 
   useEffect(() => {
-    fetchBeerData();
-  }, [fetchBeerData]);
+    fetchBeerData(currentPage);
+  }, [fetchBeerData, currentPage]);
+
+  const fetchNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
 
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
@@ -190,7 +201,13 @@ export default function Beer() {
             )}
           </Row>
         </Content>
-        <Pagination defaultCurrent={1} total={beerData.length} />
+        <Pagination
+          defaultCurrent={1}
+          pageSize={10}
+          total={325}
+          onChange={fetchNextPage}
+          style={stylePagination}
+        />
       </div>
       <Footer />
     </Layout>

@@ -59,3 +59,7 @@ button {
 .ant-card-meta-description {
   padding-bottom: 20px;
 }
+
+.ant-pagination-options {
+  display: none;
+}
