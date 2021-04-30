@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 // import PropTypes from 'prop-types';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Carousel, Card, Row, Col } from 'antd';
@@ -68,38 +67,8 @@ export default function Dashboard() {
       });
   }, []);
 
-  // Array Pattern
-  const beerDataPattern = beerData.map((elm) => ({
-    name: elm.name,
-    description: elm.description,
-    image: elm.image_url,
-    category: 'beer',
-  }));
-  const cartoonDataPattern = cartoonData.map((elm) => ({
-    name: elm.name,
-    description: elm.status,
-    image: elm.image,
-    category: 'cartoon',
-  }));
-  const spaceDataPattern = spaceData.map((elm) => ({
-    name: elm.name,
-    description: elm.description,
-    image: elm.flickr_images,
-    category: 'space',
-  }));
-
   // Concat Data Patterns
-  const concatDataPatterns = beerDataPattern.concat(
-    cartoonDataPattern,
-    spaceDataPattern
-  );
-
-  // Setting Data Patterns
-  const dataPatterns = concatDataPatterns.map((elm) => ({
-    ...elm,
-    id: uuidv4(),
-    favorite: false,
-  }));
+  const concatDataPatterns = beerData.concat(cartoonData, spaceData);
 
   // Fetch useEffect
   useEffect(() => {
@@ -113,11 +82,7 @@ export default function Dashboard() {
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
   );
-  const dataPersisted = JSON.parse(
-    localStorage.getItem('dataPersisted') || '[]'
-  );
 
-  const [localData, setLocalData] = useState(dataPersisted);
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
   const [editOn, setEditOn] = useState(false);
 
@@ -137,15 +102,13 @@ export default function Dashboard() {
       return elm;
     });
 
-    setLocalData(favoritedData);
     localStorage.setItem('storedData', JSON.stringify(favoritedData));
     localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
   };
 
   useEffect(() => {
-    localStorage.setItem('storedData', JSON.stringify(dataPatterns));
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
-  }, [dataPatterns, localFavorites]);
+  }, [localFavorites]);
 
   return (
     <Layout style={styleLayout}>
@@ -164,15 +127,19 @@ export default function Dashboard() {
       <div style={styleWrapper}>
         <Content>
           <Row gutter={[16, 16]}>
-            {localData && localData.length
-              ? localData.map((item) => (
+            {concatDataPatterns && concatDataPatterns.length
+              ? concatDataPatterns.map((item) => (
                   <Col xs={12} lg={6} key={item.id}>
                     <Card
                       hoverable
                       cover={
                         <img
                           alt={item.name}
-                          src={item.image}
+                          src={
+                            item.image ||
+                            item.image_url ||
+                            item.flickr_images[0]
+                          }
                           loading="lazy"
                           className="img-styled"
                         />
@@ -187,7 +154,11 @@ export default function Dashboard() {
                           updateFavorite(item);
                         }}
                       >
-                        {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+                        {storedFavorites.some((el) => el.id === item.id) ? (
+                          <HeartFilled />
+                        ) : (
+                          <HeartOutlined />
+                        )}
                       </button>
                       <p>{item.category}</p>
                       <Meta
@@ -201,42 +172,7 @@ export default function Dashboard() {
                     </Card>
                   </Col>
                 ))
-              : dataPatterns.map((item) => (
-                  <Col xs={12} lg={6} key={item.id}>
-                    <Card
-                      hoverable
-                      cover={
-                        <img
-                          alt={item.name}
-                          src={item.image}
-                          loading="lazy"
-                          className="img-styled"
-                        />
-                      }
-                    >
-                      <button
-                        className="btn-favorited"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setEditOn(!editOn);
-                          updateFavorite(item);
-                        }}
-                      >
-                        {item.favorite ? <HeartFilled /> : <HeartOutlined />}
-                      </button>
-                      <p>{item.category}</p>
-                      <Meta
-                        title={item.name}
-                        description={
-                          item.description && item.description.length > 100
-                            ? `${item.description.substring(0, 100)}...`
-                            : item.description
-                        }
-                      />
-                    </Card>
-                  </Col>
-                ))}
+              : null}
           </Row>
         </Content>
       </div>
@@ -244,3 +180,79 @@ export default function Dashboard() {
     </Layout>
   );
 }
+
+/* <Row gutter={[16, 16]}>
+{localData && localData.length
+  ? localData.map((item) => (
+      <Col xs={12} lg={6} key={item.id}>
+        <Card
+          hoverable
+          cover={
+            <img
+              alt={item.name}
+              src={item.image}
+              loading="lazy"
+              className="img-styled"
+            />
+          }
+        >
+          <button
+            className="btn-favorited"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              setEditOn(!editOn);
+              updateFavorite(item);
+            }}
+          >
+            {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+          </button>
+          <p>{item.category}</p>
+          <Meta
+            title={item.name}
+            description={
+              item.description && item.description.length > 100
+                ? `${item.description.substring(0, 100)}...`
+                : item.description
+            }
+          />
+        </Card>
+      </Col>
+    ))
+  : dataPatterns.map((item) => (
+      <Col xs={12} lg={6} key={item.id}>
+        <Card
+          hoverable
+          cover={
+            <img
+              alt={item.name}
+              src={item.image}
+              loading="lazy"
+              className="img-styled"
+            />
+          }
+        >
+          <button
+            className="btn-favorited"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              setEditOn(!editOn);
+              updateFavorite(item);
+            }}
+          >
+            {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+          </button>
+          <p>{item.category}</p>
+          <Meta
+            title={item.name}
+            description={
+              item.description && item.description.length > 100
+                ? `${item.description.substring(0, 100)}...`
+                : item.description
+            }
+          />
+        </Card>
+      </Col>
+    ))}
+</Row> */
