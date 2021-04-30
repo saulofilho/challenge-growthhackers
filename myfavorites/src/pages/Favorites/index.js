@@ -34,7 +34,7 @@ export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
 
   if (window.location.pathname === '/favorites' && isPrivate && !signed) {
-    window.location.replace('/');
+    window.location.replace('/admin');
   }
 
   const [editOn, setEditOn] = useState(false);
@@ -136,64 +136,3 @@ Favorites.propTypes = {
 Favorites.defaultProps = {
   isPrivate: true,
 };
-
-/* <Row gutter={[16, 16]}>
-{searchResults && searchResults.length ? (
-  searchResults.map((item) => (
-    <Col xs={12} lg={6} key={item.id}>
-      <Card
-        hoverable
-        cover={
-          <img
-            alt={item.name}
-            src={item.image}
-            loading="lazy"
-            className="img-styled"
-          />
-        }
-      >
-        <button
-          style={styleBtn}
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            setEditOn(!editOn);
-            // updateFavorite(item);
-          }}
-        >
-          {item.favorite ? <HeartFilled /> : <HeartOutlined />}
-        </button>
-
-        <p>{item.category}</p>
-        <Meta
-          title={item.name}
-          description={
-            item.description && item.description.length > 100
-              ? `${item.description.substring(0, 100)}...`
-              : item.description
-          }
-        />
-      </Card>
-    </Col>
-  ))
-) : (
-  <p>No favorited.</p>
-)}
-</Row>
-
-
-                {searchResults &&
-                  searchResults.map((elm) => (
-                    <button
-                      style={styleBtn}
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setEditOn(!editOn);
-                        updateFavorite(elm);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  ))}
-*/

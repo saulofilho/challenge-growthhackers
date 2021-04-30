@@ -1,5 +1,5 @@
-.style-wrapper-dashboard path {
-  color: red;
+.btn-favorited path {
+  color: red !important;
 }
 .img-styled {
   object-fit: contain;

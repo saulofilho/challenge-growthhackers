@@ -50,7 +50,7 @@ export default function SignIn() {
               Log out
             </button>
           ) : (
-            <button type="submit">{loading ? 'Loading...' : 'Get in'}</button>
+            <button type="submit">{loading ? 'Loading...' : 'Login'}</button>
           )}
         </Form>
       </div>

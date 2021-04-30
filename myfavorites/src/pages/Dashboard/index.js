@@ -13,6 +13,7 @@ import './styles.css';
 
 const { Content } = Layout;
 
+// Styles
 const styleLayout = {
   background: 'white',
 };
@@ -243,38 +244,3 @@ export default function Dashboard() {
     </Layout>
   );
 }
-
-// useEffect(() => {
-//   if (!allData.length) {
-//     setAllData([...dataPatterns]);
-//   }
-// }, [allData.length, dataPatterns]);
-
-// Local Storage
-// localStorage.setItem('storedData', JSON.stringify([...dataPatterns]));
-// const storedData = JSON.parse(localStorage.getItem('storedData') || '{}');
-
-// Filter Data
-// const beerFiltered = dataPatterns.filter((elm) => elm.category === 'beer');
-// const cartoonFiltered = dataPatterns.filter(
-//   (elm) => elm.category === 'cartoon'
-// );
-// const spaceFiltered = dataPatterns.filter((elm) => elm.category === 'space');
-
-// // Set Filtered Data
-// const setBeerFiltered = () => {
-//   setAllData(beerFiltered);
-// };
-// const setCartoonFiltered = () => {
-//   setAllData(cartoonFiltered);
-// };
-// const setSpaceFiltered = () => {
-//   setAllData(spaceFiltered);
-// };
-
-// console.log('xxx', allData);
-// console.log('storedData', storedData);
-
-// .sort(() => 0.5 - Math.random())
-
-// https://react-select.com/home
