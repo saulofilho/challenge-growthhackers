@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Card, Row, Col, Input, Pagination } from 'antd';
 import { toast } from 'react-toastify';
-import { apiCartoon } from '../../services/api';
+import DataService from '../../services/fetchPagination';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -36,22 +36,31 @@ const styleBtnFilter = {
   background: 'transparent',
   paddingLeft: '20px',
 };
+const stylePagination = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '20px 0 0',
+};
 
 const { Meta } = Card;
 
 export default function Cartoon() {
   const [cartoonData, setCartoonData] = useState([]);
+  const [cartoonDataCount, setCartoonDataCount] = useState();
   const [editOn, setEditOn] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [sortType, setSortType] = useState('name');
   const [orderProducts, setOrderProducts] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchCartoonData = useCallback(async () => {
-    await apiCartoon
+  const fetchCartoonData = useCallback(async (pageNumber) => {
+    await DataService.fetchCartoon(pageNumber)
       .then((response) => {
         const { data } = response;
 
         setCartoonData([...data.results]);
+        setCartoonDataCount(data.info.count);
       })
       .catch((err) => {
         toast.error(err.message);
@@ -59,8 +68,12 @@ export default function Cartoon() {
   }, []);
 
   useEffect(() => {
-    fetchCartoonData();
-  }, [fetchCartoonData]);
+    fetchCartoonData(currentPage);
+  }, [fetchCartoonData, currentPage]);
+
+  const fetchNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
 
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
@@ -111,6 +124,7 @@ export default function Cartoon() {
     };
 
     sortArray(sortType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
   const reorderProducts = () => {
@@ -168,7 +182,7 @@ export default function Cartoon() {
                         updateFavorite(item);
                       }}
                     >
-                      {storedFavorites.some((el) => el.name === item.name) ? (
+                      {storedFavorites.some((el) => el.id === item.id) ? (
                         <HeartFilled />
                       ) : (
                         <HeartOutlined />
@@ -184,7 +198,13 @@ export default function Cartoon() {
             )}
           </Row>
         </Content>
-        <Pagination defaultCurrent={1} total={cartoonData.length} />
+        <Pagination
+          defaultCurrent={1}
+          pageSize={10}
+          total={cartoonDataCount}
+          onChange={fetchNextPage}
+          style={stylePagination}
+        />
       </div>
       <Footer />
     </Layout>

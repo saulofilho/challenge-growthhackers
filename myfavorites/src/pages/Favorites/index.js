@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Input, List, Avatar } from 'antd';
 import { store } from '../../store';
 import Header from '../../components/Header';
@@ -29,7 +28,6 @@ const styleInput = {
   padding: '20px 0',
 };
 
-// const { Meta } = Card;
 export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
 
@@ -45,8 +43,6 @@ export default function Favorites({ isPrivate }) {
   );
 
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
-
-  console.log('setLocalFavorites', setLocalFavorites);
 
   const updateFavorite = (item) => {
     const i = storedFavorites.findIndex((el) => el.id === item.id);

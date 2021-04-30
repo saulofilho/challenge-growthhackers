@@ -113,6 +113,7 @@ export default function Space() {
     };
 
     sortArray(sortType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
   const reorderProducts = () => {
@@ -172,7 +173,7 @@ export default function Space() {
                         updateFavorite(item);
                       }}
                     >
-                      {storedFavorites.some((el) => el.name === item.name) ? (
+                      {storedFavorites.some((el) => el.id === item.id) ? (
                         <HeartFilled />
                       ) : (
                         <HeartOutlined />
