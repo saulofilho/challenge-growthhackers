@@ -90,6 +90,28 @@ export default function Beer() {
     [beerData, searchValue]
   );
 
+  const [sortType, setSortType] = useState('name');
+
+  useEffect(() => {
+    const sortArray = (type) => {
+      const types = {
+        name: 'name',
+        tagline: 'tagline',
+        description: 'description',
+      };
+      const sortProperty = types[type];
+      const sorted = [...beerData].sort((a, b) =>
+        b[sortProperty].localeCompare(a[sortProperty])
+      );
+      setBeerData(sorted);
+    };
+
+    sortArray(sortType);
+  }, [sortType]);
+
+  console.log('sortType', sortType);
+  console.log('beerData', beerData);
+
   return (
     <Layout style={styleLayout}>
       <Header />
@@ -100,6 +122,11 @@ export default function Beer() {
           onChange={handleSearchTagChanges}
           enterButton
         />
+        <select onChange={(e) => setSortType(e.target.value)}>
+          <option value="name">name</option>
+          <option value="tagline">tagline</option>
+          <option value="description">description</option>
+        </select>
         <Content>
           <Row gutter={[16, 16]}>
             {searchResults && searchResults.length ? (
@@ -127,16 +154,10 @@ export default function Beer() {
                     >
                       {item.favorite ? <HeartFilled /> : <HeartOutlined />}
                     </button>
-
-                    <p>{item.category}</p>
-                    <Meta
-                      title={item.name}
-                      description={
-                        item.description && item.description.length > 100
-                          ? `${item.description.substring(0, 100)}...`
-                          : item.description
-                      }
-                    />
+                    <Meta description={item.first_brewed} />
+                    <Meta description={item.tagline} />
+                    <Meta title={item.name} description={item.description} />
+                    <Meta description={item.brewers_tips} />
                   </Card>
                 </Col>
               ))
@@ -151,6 +172,3 @@ export default function Beer() {
     </Layout>
   );
 }
-
-// https://codesandbox.io/s/9235px9x3w?file=/src/index.tsx:462-468
-// https://codesandbox.io/s/react-hook-pagination-g7wje
