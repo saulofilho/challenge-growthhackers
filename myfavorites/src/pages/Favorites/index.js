@@ -134,6 +134,7 @@ export default function Favorites({ isPrivate }) {
             <option value="description">Description</option>
           </select>
           <button
+            data-testid="div-toggle"
             type="button"
             onClick={() => reorderProducts()}
             style={styleBtnFilter}
