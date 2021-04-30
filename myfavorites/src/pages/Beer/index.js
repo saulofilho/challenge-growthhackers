@@ -171,7 +171,7 @@ export default function Beer() {
                         updateFavorite(item);
                       }}
                     >
-                      {storedFavorites.map((elm) => elm.name === item.id) ? (
+                      {storedFavorites.some((el) => el.name === item.name) ? (
                         <HeartFilled />
                       ) : (
                         <HeartOutlined />
