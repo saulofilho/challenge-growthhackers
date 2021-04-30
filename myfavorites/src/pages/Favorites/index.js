@@ -107,7 +107,13 @@ export default function Favorites({ isPrivate }) {
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar src={item.image || item.image_url} />}
+                  avatar={
+                    <Avatar
+                      src={
+                        item.image || item.image_url || item.flickr_images[0]
+                      }
+                    />
+                  }
                   title={item.name}
                   description={item.description}
                 />

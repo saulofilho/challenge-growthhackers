@@ -28,20 +28,30 @@ const styleWrapper = {
 const styleInput = {
   padding: '20px 0',
 };
+const styleWrapperFilter = {
+  padding: '0 0 20px',
+};
+const styleBtnFilter = {
+  border: 'unset',
+  background: 'transparent',
+  paddingLeft: '20px',
+};
 
 const { Meta } = Card;
 
 export default function Space() {
-  const [beerData, setBeerData] = useState([]);
+  const [cartoonData, setSpaceData] = useState([]);
   const [editOn, setEditOn] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [sortType, setSortType] = useState('name');
+  const [orderProducts, setOrderProducts] = useState(false);
 
-  const fetchBeerData = useCallback(async () => {
+  const fetchSpaceData = useCallback(async () => {
     await apiSpace
       .then((response) => {
         const { data } = response;
 
-        setBeerData([...data.docs]);
+        setSpaceData([...data.docs]);
       })
       .catch((err) => {
         toast.error(err.message);
@@ -49,29 +59,25 @@ export default function Space() {
   }, []);
 
   useEffect(() => {
-    fetchBeerData();
-  }, [fetchBeerData]);
+    fetchSpaceData();
+  }, [fetchSpaceData]);
 
-  // const updateFavorite = (item) => {
-  //   setLocalFavorites((prevState) => [
-  //     ...prevState,
-  //     { ...item, favorite: editOn },
-  //   ]);
+  const storedFavorites = JSON.parse(
+    localStorage.getItem('storedFavorites') || '[]'
+  );
 
-  //   const favoritedData = storedData.map((elm) => {
-  //     if (elm.id === item.id) {
-  //       return {
-  //         ...elm,
-  //         favorite: editOn,
-  //       };
-  //     }
-  //     return elm;
-  //   });
+  const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
-  //   setLocalData(favoritedData);
-  //   localStorage.setItem('storedData', JSON.stringify(favoritedData));
-  //   localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
-  // };
+  const updateFavorite = (item) => {
+    setLocalFavorites((prevState) => [
+      ...prevState,
+      { ...item, favorite: editOn },
+    ]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
+  }, [localFavorites]);
 
   const handleSearchTagChanges = (e) => {
     setSearchValue(e.target.value);
@@ -80,15 +86,39 @@ export default function Space() {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? beerData
-        : beerData.filter((item) =>
+        ? cartoonData
+        : cartoonData.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [beerData, searchValue]
+    [cartoonData, searchValue]
   );
+
+  useEffect(() => {
+    const sortArray = (type) => {
+      const types = {
+        name: 'name',
+        company: 'company',
+        description: 'description',
+        country: 'country',
+        type: 'type',
+      };
+      const sortProperty = types[type];
+      const sorted = [...cartoonData].sort((a, b) =>
+        b[sortProperty].localeCompare(a[sortProperty])
+      );
+      setSpaceData(sorted);
+    };
+
+    sortArray(sortType);
+  }, [sortType]);
+
+  const reorderProducts = () => {
+    cartoonData.reverse();
+    setOrderProducts(!orderProducts);
+  };
 
   return (
     <Layout style={styleLayout}>
@@ -100,6 +130,22 @@ export default function Space() {
           onChange={handleSearchTagChanges}
           enterButton
         />
+        <div style={styleWrapperFilter}>
+          <select onChange={(e) => setSortType(e.target.value)}>
+            <option value="name">Name</option>
+            <option value="company">Company</option>
+            <option value="description">Description</option>
+            <option value="country">Country</option>
+            <option value="type">Type</option>
+          </select>
+          <button
+            type="button"
+            onClick={() => reorderProducts()}
+            style={styleBtnFilter}
+          >
+            {orderProducts ? <i>↑</i> : <i>↓</i>}
+          </button>
+        </div>
         <Content>
           <Row gutter={[16, 16]}>
             {searchResults && searchResults.length ? (
@@ -122,10 +168,14 @@ export default function Space() {
                       onClick={(e) => {
                         e.preventDefault();
                         setEditOn(!editOn);
-                        // updateFavorite(item);
+                        updateFavorite(item);
                       }}
                     >
-                      {item.favorite ? <HeartFilled /> : <HeartOutlined />}
+                      {storedFavorites.some((el) => el.name === item.name) ? (
+                        <HeartFilled />
+                      ) : (
+                        <HeartOutlined />
+                      )}
                     </button>
                     <Meta description={item.company} />
                     <Meta title={item.name} description={item.country} />
@@ -139,12 +189,9 @@ export default function Space() {
             )}
           </Row>
         </Content>
-        <Pagination defaultCurrent={1} total={beerData.length} />
+        <Pagination defaultCurrent={1} total={cartoonData.length} />
       </div>
       <Footer />
     </Layout>
   );
 }
-
-// https://codesandbox.io/s/9235px9x3w?file=/src/index.tsx:462-468
-// https://codesandbox.io/s/react-hook-pagination-g7wje
