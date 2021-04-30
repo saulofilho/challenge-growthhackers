@@ -28,6 +28,14 @@ const styleWrapper = {
 const styleInput = {
   padding: '20px 0',
 };
+const styleWrapperFilter = {
+  padding: '0 0 20px',
+};
+const styleBtnFilter = {
+  border: 'unset',
+  background: 'transparent',
+  paddingLeft: '20px',
+};
 
 const { Meta } = Card;
 
@@ -37,6 +45,11 @@ export default function Beer() {
   const [searchValue, setSearchValue] = useState('');
   const [sortType, setSortType] = useState('name');
   const [orderProducts, setOrderProducts] = useState(false);
+
+  const addFavorited = beerData.map((elm) => ({
+    ...elm,
+    favorite: false,
+  }));
 
   const fetchBeerData = useCallback(async () => {
     await apiBeer
@@ -54,26 +67,24 @@ export default function Beer() {
     fetchBeerData();
   }, [fetchBeerData]);
 
-  // const updateFavorite = (item) => {
-  //   setLocalFavorites((prevState) => [
-  //     ...prevState,
-  //     { ...item, favorite: editOn },
-  //   ]);
+  const storedFavorites = JSON.parse(
+    localStorage.getItem('storedFavorites') || '[]'
+  );
 
-  //   const favoritedData = storedData.map((elm) => {
-  //     if (elm.id === item.id) {
-  //       return {
-  //         ...elm,
-  //         favorite: editOn,
-  //       };
-  //     }
-  //     return elm;
-  //   });
+  const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
-  //   setLocalData(favoritedData);
-  //   localStorage.setItem('storedData', JSON.stringify(favoritedData));
-  //   localStorage.setItem('dataPersisted', JSON.stringify(favoritedData));
-  // };
+  const updateFavorite = (item) => {
+    setLocalFavorites((prevState) => [
+      ...prevState,
+      { ...item, favorite: editOn },
+    ]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
+  }, [localFavorites]);
+
+  console.log('localFavorites', localFavorites);
 
   const handleSearchTagChanges = (e) => {
     setSearchValue(e.target.value);
@@ -82,14 +93,14 @@ export default function Beer() {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? beerData
-        : beerData.filter((item) =>
+        ? addFavorited
+        : addFavorited.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [beerData, searchValue]
+    [addFavorited, searchValue]
   );
 
   useEffect(() => {
@@ -98,6 +109,8 @@ export default function Beer() {
         name: 'name',
         tagline: 'tagline',
         description: 'description',
+        first_brewed: 'first_brewed',
+        brewers_tips: 'brewers_tips',
       };
       const sortProperty = types[type];
       const sorted = [...beerData].sort((a, b) =>
@@ -124,14 +137,22 @@ export default function Beer() {
           onChange={handleSearchTagChanges}
           enterButton
         />
-        <select onChange={(e) => setSortType(e.target.value)}>
-          <option value="name">name</option>
-          <option value="tagline">tagline</option>
-          <option value="description">description</option>
-        </select>
-        <button type="button" onClick={() => reorderProducts()}>
-          {orderProducts ? <i>↑</i> : <i>↓</i>}
-        </button>
+        <div style={styleWrapperFilter}>
+          <select onChange={(e) => setSortType(e.target.value)}>
+            <option value="name">Name</option>
+            <option value="tagline">Tagline</option>
+            <option value="description">Description</option>
+            <option value="first_brewed">First Brewed</option>
+            <option value="brewers_tips">Brewers Tips</option>
+          </select>
+          <button
+            type="button"
+            onClick={() => reorderProducts()}
+            style={styleBtnFilter}
+          >
+            {orderProducts ? <i>↑</i> : <i>↓</i>}
+          </button>
+        </div>
         <Content>
           <Row gutter={[16, 16]}>
             {searchResults && searchResults.length ? (
@@ -154,7 +175,7 @@ export default function Beer() {
                       onClick={(e) => {
                         e.preventDefault();
                         setEditOn(!editOn);
-                        // updateFavorite(item);
+                        updateFavorite(item);
                       }}
                     >
                       {item.favorite ? <HeartFilled /> : <HeartOutlined />}
