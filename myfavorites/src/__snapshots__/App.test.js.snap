@@ -1,0 +1,758 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`valid path should not redirect to 404 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <section
+        class="ant-layout"
+        style="background: white;"
+      >
+        <header
+          class="ant-layout-header"
+          style="background: rgb(186, 231, 255); padding: 0px 0px;"
+        >
+          <div
+            style="max-width: 900px; width: 100%; margin: 0px auto; height: 100%; padding: 0px 20px;"
+          >
+            <div
+              class="ant-row"
+            >
+              <div
+                class="ant-col ant-col-xs-12 ant-col-lg-20"
+              >
+                <a
+                  href="/"
+                >
+                  <p>
+                    ⭐My Favorites⭐
+                  </p>
+                </a>
+              </div>
+              <div
+                class="ant-col ant-col-xs-12 ant-col-lg-4"
+                style="display: flex; justify-content: flex-end; align-items: flex-end;"
+              >
+                <a
+                  href="/admin"
+                  style="padding-right: 20px;"
+                >
+                  <span
+                    aria-label="user"
+                    class="anticon anticon-user"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="user"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"
+                      />
+                    </svg>
+                  </span>
+                </a>
+                <a
+                  href="/favorites"
+                >
+                  <span
+                    aria-label="heart"
+                    class="anticon anticon-heart"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="heart"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"
+                        fill="#1890ff"
+                      />
+                      <path
+                        d="M679.7 201c-73.1 0-136.5 40.8-167.7 100.4C480.8 241.8 417.4 201 344.3 201c-104 0-188.3 82.6-188.3 184.5 0 201.2 356 429.3 356 429.3s356-228.1 356-429.3C868 283.6 783.7 201 679.7 201z"
+                        fill="#e6f7ff"
+                      />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div
+          class="ant-carousel"
+        >
+          <div
+            class="slick-slider slick-initialized"
+            dir="ltr"
+          >
+            <div
+              class="slick-list"
+            >
+              <div
+                class="slick-track"
+                style="opacity: 1; transform: translate3d(0px, 0px, 0px);"
+              >
+                <div
+                  aria-hidden="true"
+                  class="slick-slide slick-cloned"
+                  data-index="-1"
+                  style="width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/space"
+                      >
+                        Space's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="false"
+                  class="slick-slide slick-active slick-current"
+                  data-index="0"
+                  style="outline: none; width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/beer"
+                      >
+                        Beer's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="slick-slide"
+                  data-index="1"
+                  style="outline: none; width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/cartoon"
+                      >
+                        Cartoon's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="slick-slide"
+                  data-index="2"
+                  style="outline: none; width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/space"
+                      >
+                        Space's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="slick-slide slick-cloned"
+                  data-index="3"
+                  style="width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/beer"
+                      >
+                        Beer's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="slick-slide slick-cloned"
+                  data-index="4"
+                  style="width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/cartoon"
+                      >
+                        Cartoon's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  aria-hidden="true"
+                  class="slick-slide slick-cloned"
+                  data-index="5"
+                  style="width: 0px;"
+                  tabindex="-1"
+                >
+                  <div>
+                    <div
+                      class="carousel-item"
+                      style="width: 100%; display: inline-block;"
+                      tabindex="-1"
+                    >
+                      <a
+                        href="/space"
+                      >
+                        Space's category
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul
+              class="slick-dots slick-dots-bottom"
+              style="display: block;"
+            >
+              <li
+                class="slick-active"
+              >
+                <button>
+                  1
+                </button>
+              </li>
+              <li
+                class=""
+              >
+                <button>
+                  2
+                </button>
+              </li>
+              <li
+                class=""
+              >
+                <button>
+                  3
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          style="max-width: 900px; width: 100%; min-height: 100vh; margin: 0px auto; height: 100%; padding: 20px;"
+        >
+          <span
+            class="ant-input-group-wrapper ant-input-search ant-input-search-with-button"
+            style="padding: 20px 0px;"
+          >
+            <span
+              class="ant-input-wrapper ant-input-group"
+            >
+              <input
+                class="ant-input"
+                placeholder="input search text"
+                type="text"
+                value=""
+              />
+              <span
+                class="ant-input-group-addon"
+              >
+                <button
+                  class="ant-btn ant-btn-primary ant-input-search-button"
+                  type="button"
+                >
+                  <span
+                    aria-label="search"
+                    class="anticon anticon-search"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="search"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </span>
+            </span>
+          </span>
+          <main
+            class="ant-layout-content"
+          >
+            <div
+              class="ant-row"
+              style="margin: -8px -8px -8px -8px;"
+            />
+          </main>
+        </div>
+        <footer
+          class="ant-layout-footer"
+          style="background: rgb(186, 231, 255); padding: 20px 0px;"
+        >
+          <div
+            style="max-width: 900px; width: 100%; margin: 0px auto; height: 100%; padding: 0px 20px;"
+          >
+            <p>
+              Copyright © 2021 My Favorites, Inc. All rights reserved.
+            </p>
+          </div>
+        </footer>
+      </section>
+      <div
+        class="Toastify"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <section
+      class="ant-layout"
+      style="background: white;"
+    >
+      <header
+        class="ant-layout-header"
+        style="background: rgb(186, 231, 255); padding: 0px 0px;"
+      >
+        <div
+          style="max-width: 900px; width: 100%; margin: 0px auto; height: 100%; padding: 0px 20px;"
+        >
+          <div
+            class="ant-row"
+          >
+            <div
+              class="ant-col ant-col-xs-12 ant-col-lg-20"
+            >
+              <a
+                href="/"
+              >
+                <p>
+                  ⭐My Favorites⭐
+                </p>
+              </a>
+            </div>
+            <div
+              class="ant-col ant-col-xs-12 ant-col-lg-4"
+              style="display: flex; justify-content: flex-end; align-items: flex-end;"
+            >
+              <a
+                href="/admin"
+                style="padding-right: 20px;"
+              >
+                <span
+                  aria-label="user"
+                  class="anticon anticon-user"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="user"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"
+                    />
+                  </svg>
+                </span>
+              </a>
+              <a
+                href="/favorites"
+              >
+                <span
+                  aria-label="heart"
+                  class="anticon anticon-heart"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="heart"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M923 283.6a260.04 260.04 0 00-56.9-82.8 264.4 264.4 0 00-84-55.5A265.34 265.34 0 00679.7 125c-49.3 0-97.4 13.5-139.2 39-10 6.1-19.5 12.8-28.5 20.1-9-7.3-18.5-14-28.5-20.1-41.8-25.5-89.9-39-139.2-39-35.5 0-69.9 6.8-102.4 20.3-31.4 13-59.7 31.7-84 55.5a258.44 258.44 0 00-56.9 82.8c-13.9 32.3-21 66.6-21 101.9 0 33.3 6.8 68 20.3 103.3 11.3 29.5 27.5 60.1 48.2 91 32.8 48.9 77.9 99.9 133.9 151.6 92.8 85.7 184.7 144.9 188.6 147.3l23.7 15.2c10.5 6.7 24 6.7 34.5 0l23.7-15.2c3.9-2.5 95.7-61.6 188.6-147.3 56-51.7 101.1-102.7 133.9-151.6 20.7-30.9 37-61.5 48.2-91 13.5-35.3 20.3-70 20.3-103.3.1-35.3-7-69.6-20.9-101.9zM512 814.8S156 586.7 156 385.5C156 283.6 240.3 201 344.3 201c73.1 0 136.5 40.8 167.7 100.4C543.2 241.8 606.6 201 679.7 201c104 0 188.3 82.6 188.3 184.5 0 201.2-356 429.3-356 429.3z"
+                      fill="#1890ff"
+                    />
+                    <path
+                      d="M679.7 201c-73.1 0-136.5 40.8-167.7 100.4C480.8 241.8 417.4 201 344.3 201c-104 0-188.3 82.6-188.3 184.5 0 201.2 356 429.3 356 429.3s356-228.1 356-429.3C868 283.6 783.7 201 679.7 201z"
+                      fill="#e6f7ff"
+                    />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div
+        class="ant-carousel"
+      >
+        <div
+          class="slick-slider slick-initialized"
+          dir="ltr"
+        >
+          <div
+            class="slick-list"
+          >
+            <div
+              class="slick-track"
+              style="opacity: 1; transform: translate3d(0px, 0px, 0px);"
+            >
+              <div
+                aria-hidden="true"
+                class="slick-slide slick-cloned"
+                data-index="-1"
+                style="width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/space"
+                    >
+                      Space's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="false"
+                class="slick-slide slick-active slick-current"
+                data-index="0"
+                style="outline: none; width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/beer"
+                    >
+                      Beer's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="slick-slide"
+                data-index="1"
+                style="outline: none; width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/cartoon"
+                    >
+                      Cartoon's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="slick-slide"
+                data-index="2"
+                style="outline: none; width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/space"
+                    >
+                      Space's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="slick-slide slick-cloned"
+                data-index="3"
+                style="width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/beer"
+                    >
+                      Beer's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="slick-slide slick-cloned"
+                data-index="4"
+                style="width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/cartoon"
+                    >
+                      Cartoon's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="slick-slide slick-cloned"
+                data-index="5"
+                style="width: 0px;"
+                tabindex="-1"
+              >
+                <div>
+                  <div
+                    class="carousel-item"
+                    style="width: 100%; display: inline-block;"
+                    tabindex="-1"
+                  >
+                    <a
+                      href="/space"
+                    >
+                      Space's category
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="slick-dots slick-dots-bottom"
+            style="display: block;"
+          >
+            <li
+              class="slick-active"
+            >
+              <button>
+                1
+              </button>
+            </li>
+            <li
+              class=""
+            >
+              <button>
+                2
+              </button>
+            </li>
+            <li
+              class=""
+            >
+              <button>
+                3
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        style="max-width: 900px; width: 100%; min-height: 100vh; margin: 0px auto; height: 100%; padding: 20px;"
+      >
+        <span
+          class="ant-input-group-wrapper ant-input-search ant-input-search-with-button"
+          style="padding: 20px 0px;"
+        >
+          <span
+            class="ant-input-wrapper ant-input-group"
+          >
+            <input
+              class="ant-input"
+              placeholder="input search text"
+              type="text"
+              value=""
+            />
+            <span
+              class="ant-input-group-addon"
+            >
+              <button
+                class="ant-btn ant-btn-primary ant-input-search-button"
+                type="button"
+              >
+                <span
+                  aria-label="search"
+                  class="anticon anticon-search"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="search"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </span>
+          </span>
+        </span>
+        <main
+          class="ant-layout-content"
+        >
+          <div
+            class="ant-row"
+            style="margin: -8px -8px -8px -8px;"
+          />
+        </main>
+      </div>
+      <footer
+        class="ant-layout-footer"
+        style="background: rgb(186, 231, 255); padding: 20px 0px;"
+      >
+        <div
+          style="max-width: 900px; width: 100%; margin: 0px auto; height: 100%; padding: 0px 20px;"
+        >
+          <p>
+            Copyright © 2021 My Favorites, Inc. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </section>
+    <div
+      class="Toastify"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
