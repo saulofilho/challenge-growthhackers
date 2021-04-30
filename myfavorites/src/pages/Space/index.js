@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Layout, Card, Row, Col, Input, Pagination } from 'antd';
+import { Layout, Card, Row, Col, Input } from 'antd';
 import { toast } from 'react-toastify';
 import { apiSpace } from '../../services/api';
 import Header from '../../components/Header';
@@ -190,7 +190,6 @@ export default function Space() {
             )}
           </Row>
         </Content>
-        <Pagination defaultCurrent={1} total={cartoonData.length} />
       </div>
       <Footer />
     </Layout>
