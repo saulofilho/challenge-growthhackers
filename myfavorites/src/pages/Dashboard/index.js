@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { apiBeer, apiCartoon, apiSpace } from '../../services/api';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { store } from '../../store';
 
 import './styles.css';
 
@@ -32,6 +33,8 @@ const styleInput = {
 const { Meta } = Card;
 
 export default function Dashboard() {
+  const { signed } = store.getState().auth;
+
   // Data
   const [beerData, setBeerData] = useState([]);
   const [cartoonData, setCartoonData] = useState([]);
@@ -97,9 +100,11 @@ export default function Dashboard() {
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
   const [editOn, setEditOn] = useState(false);
 
-  const updateFavorite = (item) => {
-    if (!localFavorites.find((el) => el.id === item.id)) {
-      setLocalFavorites((prevState) => [...prevState, { ...item }]);
+  const saveFavorite = (item) => {
+    if (signed) {
+      if (!localFavorites.find((el) => el.id === item.id)) {
+        setLocalFavorites((prevState) => [...prevState, { ...item }]);
+      }
     }
   };
 
@@ -111,6 +116,7 @@ export default function Dashboard() {
     setSearchValue(e.target.value);
   };
 
+  // Search
   const searchResults = useMemo(
     () =>
       !searchValue
@@ -171,7 +177,7 @@ export default function Dashboard() {
                         onClick={(e) => {
                           e.preventDefault();
                           setEditOn(!editOn);
-                          updateFavorite(item);
+                          saveFavorite(item);
                         }}
                       >
                         {storedFavorites.some((el) => el.name === item.name) ? (

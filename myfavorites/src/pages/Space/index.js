@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { apiSpace } from '../../services/api';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { store } from '../../store';
 
 const { Content } = Layout;
 
@@ -40,6 +41,8 @@ const styleBtnFilter = {
 const { Meta } = Card;
 
 export default function Space() {
+  const { signed } = store.getState().auth;
+
   const [cartoonData, setSpaceData] = useState([]);
   const [editOn, setEditOn] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -68,8 +71,12 @@ export default function Space() {
 
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
-  const updateFavorite = (item) => {
-    setLocalFavorites((prevState) => [...prevState, { ...item }]);
+  const saveFavorite = (item) => {
+    if (signed) {
+      if (!localFavorites.find((el) => el.id === item.id)) {
+        setLocalFavorites((prevState) => [...prevState, { ...item }]);
+      }
+    }
   };
 
   useEffect(() => {
@@ -167,7 +174,7 @@ export default function Space() {
                       onClick={(e) => {
                         e.preventDefault();
                         setEditOn(!editOn);
-                        updateFavorite(item);
+                        saveFavorite(item);
                       }}
                     >
                       {storedFavorites.some((el) => el.name === item.name) ? (

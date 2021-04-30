@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import DataService from '../../services/fetchPagination';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { store } from '../../store';
 
 const { Content } = Layout;
 
@@ -46,6 +47,8 @@ const stylePagination = {
 const { Meta } = Card;
 
 export default function Cartoon() {
+  const { signed } = store.getState().auth;
+
   const [cartoonData, setCartoonData] = useState([]);
   const [cartoonDataCount, setCartoonDataCount] = useState();
   const [editOn, setEditOn] = useState(false);
@@ -81,8 +84,12 @@ export default function Cartoon() {
 
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
-  const updateFavorite = (item) => {
-    setLocalFavorites((prevState) => [...prevState, { ...item }]);
+  const saveFavorite = (item) => {
+    if (signed) {
+      if (!localFavorites.find((el) => el.id === item.id)) {
+        setLocalFavorites((prevState) => [...prevState, { ...item }]);
+      }
+    }
   };
 
   useEffect(() => {
@@ -176,7 +183,7 @@ export default function Cartoon() {
                       onClick={(e) => {
                         e.preventDefault();
                         setEditOn(!editOn);
-                        updateFavorite(item);
+                        saveFavorite(item);
                       }}
                     >
                       {storedFavorites.some((el) => el.name === item.name) ? (
