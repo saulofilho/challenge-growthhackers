@@ -52,23 +52,20 @@ export default function Favorites({ isPrivate }) {
     localStorage.getItem('storedFavorites') || '[]'
   );
 
-  const [data, setData] = useState(storedFavorites);
-
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
   const updateFavorite = (item) => {
-    const i = storedFavorites.findIndex((el) => el.id === item.id);
+    const i = localFavorites.findIndex((el) => el.id === item.id);
     if (i !== -1) {
-      storedFavorites.splice(i, 1);
+      localFavorites.splice(i, 1);
     }
 
-    storedFavorites.splice(i, 1);
+    localFavorites.splice(i, 1);
     setLocalFavorites(
       localFavorites.map((elm) => {
         if (elm.id === item.id) {
           return {
             ...elm,
-            favorite: editOn,
           };
         }
         return elm;
@@ -84,14 +81,14 @@ export default function Favorites({ isPrivate }) {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? data
-        : data.filter((item) =>
+        ? localFavorites
+        : localFavorites.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [data, searchValue]
+    [localFavorites, searchValue]
   );
 
   useEffect(() => {
@@ -105,10 +102,10 @@ export default function Favorites({ isPrivate }) {
         description: 'description',
       };
       const sortProperty = types[type];
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...localFavorites].sort((a, b) =>
         b[sortProperty].localeCompare(a[sortProperty])
       );
-      setData(sorted);
+      setLocalFavorites(sorted);
     };
 
     sortArray(sortType);
@@ -116,9 +113,13 @@ export default function Favorites({ isPrivate }) {
   }, [sortType]);
 
   const reorderProducts = () => {
-    data.reverse();
+    localFavorites.reverse();
     setOrderProducts(!orderProducts);
   };
+
+  const removeSameId = searchResults.filter(
+    (v, i, a) => a.findIndex((t) => t.name === v.name) === i
+  );
 
   return (
     <Layout style={styleLayout}>
@@ -146,7 +147,7 @@ export default function Favorites({ isPrivate }) {
         <Content>
           <List
             itemLayout="horizontal"
-            dataSource={searchResults}
+            dataSource={removeSameId}
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta

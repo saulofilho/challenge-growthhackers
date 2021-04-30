@@ -94,10 +94,7 @@ export default function Dashboard() {
   const [editOn, setEditOn] = useState(false);
 
   const updateFavorite = (item) => {
-    setLocalFavorites((prevState) => [
-      ...prevState,
-      { ...item, favorite: editOn },
-    ]);
+    setLocalFavorites((prevState) => [...prevState, { ...item }]);
 
     const favoritedData = storedData.map((elm) => {
       if (elm.id === item.id) {
@@ -186,79 +183,3 @@ export default function Dashboard() {
     </Layout>
   );
 }
-
-/* <Row gutter={[16, 16]}>
-{localData && localData.length
-  ? localData.map((item) => (
-      <Col xs={12} lg={6} key={item.id}>
-        <Card
-          hoverable
-          cover={
-            <img
-              alt={item.name}
-              src={item.image}
-              loading="lazy"
-              className="img-styled"
-            />
-          }
-        >
-          <button
-            className="btn-favorited"
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              setEditOn(!editOn);
-              updateFavorite(item);
-            }}
-          >
-            {item.favorite ? <HeartFilled /> : <HeartOutlined />}
-          </button>
-          <p>{item.category}</p>
-          <Meta
-            title={item.name}
-            description={
-              item.description && item.description.length > 100
-                ? `${item.description.substring(0, 100)}...`
-                : item.description
-            }
-          />
-        </Card>
-      </Col>
-    ))
-  : dataPatterns.map((item) => (
-      <Col xs={12} lg={6} key={item.id}>
-        <Card
-          hoverable
-          cover={
-            <img
-              alt={item.name}
-              src={item.image}
-              loading="lazy"
-              className="img-styled"
-            />
-          }
-        >
-          <button
-            className="btn-favorited"
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              setEditOn(!editOn);
-              updateFavorite(item);
-            }}
-          >
-            {item.favorite ? <HeartFilled /> : <HeartOutlined />}
-          </button>
-          <p>{item.category}</p>
-          <Meta
-            title={item.name}
-            description={
-              item.description && item.description.length > 100
-                ? `${item.description.substring(0, 100)}...`
-                : item.description
-            }
-          />
-        </Card>
-      </Col>
-    ))}
-</Row> */
