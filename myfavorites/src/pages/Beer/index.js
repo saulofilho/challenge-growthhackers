@@ -163,6 +163,7 @@ export default function Beer() {
                     }
                   >
                     <button
+                      className="btn-favorited"
                       style={styleBtn}
                       type="button"
                       onClick={(e) => {

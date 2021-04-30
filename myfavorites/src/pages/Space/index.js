@@ -163,6 +163,7 @@ export default function Space() {
                     }
                   >
                     <button
+                      className="btn-favorited"
                       style={styleBtn}
                       type="button"
                       onClick={(e) => {
