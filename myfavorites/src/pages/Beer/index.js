@@ -80,10 +80,7 @@ export default function Beer() {
   const [localFavorites, setLocalFavorites] = useState(storedFavorites);
 
   const updateFavorite = (item) => {
-    setLocalFavorites((prevState) => [
-      ...prevState,
-      { ...item, favorite: editOn },
-    ]);
+    setLocalFavorites((prevState) => [...prevState, { ...item }]);
   };
 
   useEffect(() => {
@@ -184,7 +181,7 @@ export default function Beer() {
                         updateFavorite(item);
                       }}
                     >
-                      {storedFavorites.some((el) => el.id === item.id) ? (
+                      {storedFavorites.some((el) => el.name === item.name) ? (
                         <HeartFilled />
                       ) : (
                         <HeartOutlined />

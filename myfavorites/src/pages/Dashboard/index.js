@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 // import PropTypes from 'prop-types';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Layout, Carousel, Card, Row, Col } from 'antd';
@@ -67,8 +68,14 @@ export default function Dashboard() {
       });
   }, []);
 
-  // Concat Data Patterns
+  // Concat Data
   const concatDataPatterns = beerData.concat(cartoonData, spaceData);
+
+  // Setting Data
+  const dataPatterns = concatDataPatterns.map((elm) => ({
+    ...elm,
+    id: uuidv4(),
+  }));
 
   // Fetch useEffect
   useEffect(() => {
@@ -126,8 +133,8 @@ export default function Dashboard() {
       <div style={styleWrapper}>
         <Content>
           <Row gutter={[16, 16]}>
-            {concatDataPatterns && concatDataPatterns.length
-              ? concatDataPatterns.map((item) => (
+            {dataPatterns && dataPatterns.length
+              ? dataPatterns.map((item) => (
                   <Col xs={12} lg={6} key={item.id}>
                     <Card
                       hoverable
@@ -153,7 +160,7 @@ export default function Dashboard() {
                           updateFavorite(item);
                         }}
                       >
-                        {storedFavorites.some((el) => el.id === item.id) ? (
+                        {storedFavorites.some((el) => el.name === item.name) ? (
                           <HeartFilled />
                         ) : (
                           <HeartOutlined />
