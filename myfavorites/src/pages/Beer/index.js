@@ -142,7 +142,7 @@ export default function Beer() {
       <div style={styleWrapper}>
         <Search
           style={styleInput}
-          placeholder="input search text"
+          placeholder="Search here..."
           onChange={handleSearchTagChanges}
           enterButton
         />
