@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Layout, Carousel, Card, Row, Col } from 'antd';
+import { Layout, Carousel, Card, Row, Col, Input } from 'antd';
 import { toast } from 'react-toastify';
 import { apiBeer, apiCartoon, apiSpace } from '../../services/api';
 import Header from '../../components/Header';
@@ -11,6 +11,8 @@ import './styles.css';
 
 const { Content } = Layout;
 
+const { Search } = Input;
+
 // Styles
 const styleLayout = {
   background: 'white',
@@ -18,9 +20,13 @@ const styleLayout = {
 const styleWrapper = {
   maxWidth: '900px',
   width: '100%',
+  minHeight: '100vh',
   margin: '0 auto',
   height: '100%',
   padding: '20px',
+};
+const styleInput = {
+  padding: '20px 0',
 };
 
 const { Meta } = Card;
@@ -30,6 +36,7 @@ export default function Dashboard() {
   const [beerData, setBeerData] = useState([]);
   const [cartoonData, setCartoonData] = useState([]);
   const [spaceData, setSpaceData] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
 
   // Fetch
   const fetchBeerData = useCallback(async () => {
@@ -83,7 +90,6 @@ export default function Dashboard() {
   }, [fetchBeerData, fetchCartoonData, fetchSpaceData]);
 
   // Local Storage
-
   const storedFavorites = JSON.parse(
     localStorage.getItem('storedFavorites') || '[]'
   );
@@ -101,6 +107,23 @@ export default function Dashboard() {
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [localFavorites]);
 
+  const handleSearchTagChanges = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const searchResults = useMemo(
+    () =>
+      !searchValue
+        ? dataPatterns
+        : dataPatterns.filter((item) =>
+            item.name
+              .toString()
+              .toLowerCase()
+              .includes(searchValue.toLowerCase())
+          ),
+    [dataPatterns, searchValue]
+  );
+
   return (
     <Layout style={styleLayout}>
       <Header />
@@ -116,10 +139,16 @@ export default function Dashboard() {
         </div>
       </Carousel>
       <div style={styleWrapper}>
+        <Search
+          style={styleInput}
+          placeholder="input search text"
+          onChange={handleSearchTagChanges}
+          enterButton
+        />
         <Content>
           <Row gutter={[16, 16]}>
-            {dataPatterns && dataPatterns.length
-              ? dataPatterns.map((item) => (
+            {searchResults && searchResults.length
+              ? searchResults.map((item) => (
                   <Col xs={12} lg={6} key={item.id}>
                     <Card
                       hoverable

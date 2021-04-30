@@ -118,10 +118,6 @@ export default function Favorites({ isPrivate }) {
     setOrderProducts(!orderProducts);
   };
 
-  const removeSameId = searchResults.filter(
-    (v, i, a) => a.findIndex((t) => t.name === v.name) === i
-  );
-
   return (
     <Layout style={styleLayout}>
       <Header />
@@ -148,7 +144,7 @@ export default function Favorites({ isPrivate }) {
         <Content>
           <List
             itemLayout="horizontal"
-            dataSource={removeSameId}
+            dataSource={searchResults}
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta
