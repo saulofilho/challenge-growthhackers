@@ -35,6 +35,8 @@ export default function Beer() {
   const [beerData, setBeerData] = useState([]);
   const [editOn, setEditOn] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [sortType, setSortType] = useState('name');
+  const [orderProducts, setOrderProducts] = useState(false);
 
   const fetchBeerData = useCallback(async () => {
     await apiBeer
@@ -90,8 +92,6 @@ export default function Beer() {
     [beerData, searchValue]
   );
 
-  const [sortType, setSortType] = useState('name');
-
   useEffect(() => {
     const sortArray = (type) => {
       const types = {
@@ -109,8 +109,10 @@ export default function Beer() {
     sortArray(sortType);
   }, [sortType]);
 
-  console.log('sortType', sortType);
-  console.log('beerData', beerData);
+  const reorderProducts = () => {
+    beerData.reverse();
+    setOrderProducts(!orderProducts);
+  };
 
   return (
     <Layout style={styleLayout}>
@@ -127,6 +129,9 @@ export default function Beer() {
           <option value="tagline">tagline</option>
           <option value="description">description</option>
         </select>
+        <button type="button" onClick={() => reorderProducts()}>
+          {orderProducts ? <i>↑</i> : <i>↓</i>}
+        </button>
         <Content>
           <Row gutter={[16, 16]}>
             {searchResults && searchResults.length ? (
