@@ -103,10 +103,8 @@ export default function Dashboard() {
   const saveFavorite = (item) => {
     if (signed) {
       if (!localFavorites.find((el) => el.id === item.id)) {
-        console.log('y');
         setLocalFavorites((prevState) => [...prevState, { ...item }]);
       } else {
-        console.log('x');
         const i = localFavorites.findIndex((el) => el.id === item.id);
         if (i !== -1) {
           localFavorites.splice(i, 1);
