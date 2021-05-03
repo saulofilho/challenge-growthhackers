@@ -80,7 +80,7 @@ export default function Dashboard() {
   const concatData = beerData.concat(cartoonData, spaceData);
 
   // Setting Data
-  const dataPatterns = concatData.map((elm, index) => ({
+  const dataLocalStorage = concatData.map((elm, index) => ({
     ...elm,
     id: index + 1,
   }));
@@ -103,7 +103,27 @@ export default function Dashboard() {
   const saveFavorite = (item) => {
     if (signed) {
       if (!localFavorites.find((el) => el.id === item.id)) {
+        console.log('y');
         setLocalFavorites((prevState) => [...prevState, { ...item }]);
+      } else {
+        console.log('x');
+        const i = localFavorites.findIndex((el) => el.id === item.id);
+        if (i !== -1) {
+          localFavorites.splice(i, 1);
+        }
+
+        localFavorites.splice(i, 1);
+
+        setLocalFavorites(
+          localFavorites.map((elm) => {
+            if (elm.id === item.id) {
+              return {
+                ...elm,
+              };
+            }
+            return elm;
+          })
+        );
       }
     }
   };
@@ -112,7 +132,7 @@ export default function Dashboard() {
     localStorage.setItem('storedFavorites', JSON.stringify(localFavorites));
   }, [localFavorites]);
 
-  const handleSearchTagChanges = (e) => {
+  const handleSearchChanges = (e) => {
     setSearchValue(e.target.value);
   };
 
@@ -120,14 +140,14 @@ export default function Dashboard() {
   const searchResults = useMemo(
     () =>
       !searchValue
-        ? dataPatterns
-        : dataPatterns.filter((item) =>
+        ? dataLocalStorage
+        : dataLocalStorage.filter((item) =>
             item.name
               .toString()
               .toLowerCase()
               .includes(searchValue.toLowerCase())
           ),
-    [dataPatterns, searchValue]
+    [dataLocalStorage, searchValue]
   );
 
   return (
@@ -148,7 +168,7 @@ export default function Dashboard() {
         <Search
           style={styleInput}
           placeholder="Search here..."
-          onChange={handleSearchTagChanges}
+          onChange={handleSearchChanges}
           enterButton
         />
         <Content>
@@ -180,7 +200,7 @@ export default function Dashboard() {
                           saveFavorite(item);
                         }}
                       >
-                        {storedFavorites.some((el) => el.name === item.name) ? (
+                        {localFavorites.some((el) => el.name === item.name) ? (
                           <HeartFilled />
                         ) : (
                           <HeartOutlined />

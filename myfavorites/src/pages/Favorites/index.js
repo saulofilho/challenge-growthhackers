@@ -75,7 +75,7 @@ export default function Favorites({ isPrivate }) {
     window.location.reload();
   };
 
-  const handleSearchTagChanges = (e) => {
+  const handleSearchChanges = (e) => {
     setSearchValue(e.target.value);
   };
 
@@ -125,7 +125,7 @@ export default function Favorites({ isPrivate }) {
         <Search
           style={styleInput}
           placeholder="Search here..."
-          onChange={handleSearchTagChanges}
+          onChange={handleSearchChanges}
           enterButton
         />
         <div style={styleWrapperFilter}>
