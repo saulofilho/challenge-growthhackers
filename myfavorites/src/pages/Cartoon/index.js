@@ -88,6 +88,24 @@ export default function Cartoon() {
     if (signed) {
       if (!localFavorites.find((el) => el.id === item.id)) {
         setLocalFavorites((prevState) => [...prevState, { ...item }]);
+      } else {
+        const i = localFavorites.findIndex((el) => el.id === item.id);
+        if (i !== -1) {
+          localFavorites.splice(i, 1);
+        }
+
+        localFavorites.splice(i, 1);
+
+        setLocalFavorites(
+          localFavorites.map((elm) => {
+            if (elm.id === item.id) {
+              return {
+                ...elm,
+              };
+            }
+            return elm;
+          })
+        );
       }
     }
   };
@@ -186,7 +204,7 @@ export default function Cartoon() {
                         saveFavorite(item);
                       }}
                     >
-                      {storedFavorites.some((el) => el.name === item.name) ? (
+                      {localFavorites.some((el) => el.name === item.name) ? (
                         <HeartFilled />
                       ) : (
                         <HeartOutlined />
