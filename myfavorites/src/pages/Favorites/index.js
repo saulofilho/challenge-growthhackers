@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Layout, Input, List, Avatar } from 'antd';
 import { store } from '../../store';
@@ -39,8 +40,10 @@ const styleBtnFilter = {
 export default function Favorites({ isPrivate }) {
   const { signed } = store.getState().auth;
 
+  const history = useHistory();
+
   if (window.location.pathname === '/favorites' && isPrivate && !signed) {
-    window.location.replace('/admin');
+    history.replace('/admin');
   }
 
   const [editOn, setEditOn] = useState(false);
